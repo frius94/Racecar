@@ -14,6 +14,7 @@ import rcas.model.RaceCar;
  * @author suy
  *
  */
+@SuppressWarnings("Duplicates")
 public class CorneringAnalyserUtil {
 
 	private static double G = 9.81;
@@ -175,7 +176,7 @@ public class CorneringAnalyserUtil {
 
 		/**
 		 * 
-		 * @param beta
+		 * @param delta
 		 *            - the steering angle delta in degrees (°) to be set.
 		 */
 		public void setDelta(Double delta) {
