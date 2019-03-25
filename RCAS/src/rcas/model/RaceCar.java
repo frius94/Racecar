@@ -75,7 +75,8 @@ public class RaceCar {
 	 * @param cornerWeightRR
 	 *            - Rear Right corner weight in kg.
 	 */
-	public RaceCar(double cornerWeightFL, double cornerWeightFR, double cornerWeightRL, double cornerWeightRR) {
+	public RaceCar(String name, double cornerWeightFL, double cornerWeightFR, double cornerWeightRL, double cornerWeightRR) {
+		this.name           = new SimpleStringProperty(name);
 		this.cornerWeightFL = new SimpleDoubleProperty(cornerWeightFL);
 		this.cornerWeightFR = new SimpleDoubleProperty(cornerWeightFR);
 		this.cornerWeightRL = new SimpleDoubleProperty(cornerWeightRL);
@@ -83,7 +84,7 @@ public class RaceCar {
 
 		// initialize tire models with a default tire model.
 		this.frontAxleTireModel = new MagicFormulaTireModel();
-		this.rearAxleTireModel = new MagicFormulaTireModel();
+		this.rearAxleTireModel  = new MagicFormulaTireModel();
 	}
 
 	/**

@@ -21,8 +21,11 @@ public class RCASMain extends Application {
 		BorderPane mainPane = (BorderPane) fxmlLoader.load();
 
 		primaryStage.setScene(new Scene(mainPane));
-		primaryStage.centerOnScreen();
+		primaryStage.setTitle("M120 Race Car Analysis Studio");
 		primaryStage.setResizable(false);
+
+		primaryStage.centerOnScreen();
+
 		primaryStage.show();
 
 

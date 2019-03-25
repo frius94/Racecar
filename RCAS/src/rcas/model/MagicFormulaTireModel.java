@@ -76,8 +76,8 @@ public class MagicFormulaTireModel implements TireModel {
 		this.slipAngleCoefficientC = new SimpleDoubleProperty(slipAngleCoefficientC);
 		this.slipAngleCoefficientB = new SimpleDoubleProperty(slipAngleCoefficientB);
 		this.slipAngleCoefficientE = new SimpleDoubleProperty(slipAngleCoefficientE);
-		this.loadCoefficientKA = new SimpleDoubleProperty(loadCoefficientKA);
-		this.loadCoefficientKB = new SimpleDoubleProperty(loadCoefficientKB);
+		this.loadCoefficientKA     = new SimpleDoubleProperty(loadCoefficientKA);
+		this.loadCoefficientKB     = new SimpleDoubleProperty(loadCoefficientKB);
 	}
 
 	/**
