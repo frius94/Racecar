@@ -16,7 +16,7 @@ import javafx.beans.property.SimpleStringProperty;
  * and a parabolic function for lateral force based on load:<br>
  * f2 = KA * ( 1 - KB * load ) * load<br>
  * <br>
- * 
+ *
  * @author suy
  *
  */
@@ -56,7 +56,7 @@ public class MagicFormulaTireModel implements TireModel {
 	 * E = -1.6<br>
 	 * KA = 2.0<br>
 	 * KB = 0.000055
-	 * 
+	 *
 	 * @param slipAngleCoefficientC
 	 *            - coefficient C in the normalised slip angle curve function
 	 *            f1.
@@ -72,7 +72,7 @@ public class MagicFormulaTireModel implements TireModel {
 	 *            - coefficient KB in the load curve function f2.
 	 */
 	public MagicFormulaTireModel(Double slipAngleCoefficientC, Double slipAngleCoefficientB,
-			Double slipAngleCoefficientE, Double loadCoefficientKA, Double loadCoefficientKB) {
+	                             Double slipAngleCoefficientE, Double loadCoefficientKA, Double loadCoefficientKB) {
 		this.slipAngleCoefficientC = new SimpleDoubleProperty(slipAngleCoefficientC);
 		this.slipAngleCoefficientB = new SimpleDoubleProperty(slipAngleCoefficientB);
 		this.slipAngleCoefficientE = new SimpleDoubleProperty(slipAngleCoefficientE);
@@ -97,7 +97,7 @@ public class MagicFormulaTireModel implements TireModel {
 		Double x = Math.toRadians(slipAngle);
 		return Math.sin(this.slipAngleCoefficientC.get()
 				* Math.atan(this.slipAngleCoefficientB.get() * x - this.slipAngleCoefficientE.get()
-						* (this.slipAngleCoefficientB.get() * x - Math.atan(this.slipAngleCoefficientB.get() * x))));
+				* (this.slipAngleCoefficientB.get() * x - Math.atan(this.slipAngleCoefficientB.get() * x))));
 	}
 
 	private Double calcLoadForce(Double load) {
@@ -108,9 +108,9 @@ public class MagicFormulaTireModel implements TireModel {
 	 * Calculates the lateral cornering force for this tire in N.<br>
 	 * <br>
 	 * <b>CAUTION:</b> this function returns a value in Newton N!
-	 * 
+	 *
 	 * @param slipAngle
-	 *            - the slip angle in degrees (°).
+	 *            - the slip angle in degrees (Â°).
 	 * @param load
 	 *            - the load in N.
 	 * @return - lateral tire force in N.
@@ -134,3 +134,4 @@ public class MagicFormulaTireModel implements TireModel {
 				loadCoefficientKA.get(), loadCoefficientKB.get());
 	}
 }
+

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="710.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rcas.controller.RCASMainController">
+   <top>
+      <Label text="Racecar Analysis Studio" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></Label>
+   </top>
+   <left>
+      <JFXListView fx:id="listView" prefHeight="585.0" prefWidth="180.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets left="10.0" right="10.0" />
+         </BorderPane.margin></JFXListView>
+   </left>
+   <right>
+      <VBox prefHeight="585.0" prefWidth="147.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXTextField fx:id="name" labelFloat="true" promptText="Name">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </JFXTextField>
+            <JFXButton fx:id="fatm" buttonType="RAISED" prefHeight="26.0" prefWidth="151.0" style="-fx-background-color: lightgray;" text="Front axle tire model">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="ratm" buttonType="RAISED" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray;" text="Rear axle tire model">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXTextField fx:id="frd" labelFloat="true" promptText="Front roll distribution">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </JFXTextField>
+            <JFXSlider fx:id="frd_Slider" majorTickUnit="20.0" max="80.0" min="20.0" showTickLabels="true" showTickMarks="true" value="20.0" />
+         </children>
+         <BorderPane.margin>
+            <Insets right="10.0" />
+         </BorderPane.margin></VBox>
+   </right>
+   <bottom>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <buttons>
+            <JFXButton fx:id="save" buttonType="RAISED" style="-fx-background-color: lightgreen;" text="Save" />
+            <JFXButton fx:id="delete" buttonType="RAISED" style="-fx-background-color: tomato;" text="Delete">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </JFXButton>
+            <JFXButton fx:id="showMMM" buttonType="RAISED" style="-fx-background-color: lightblue;" text="Show MMM" />
+        </buttons>
+         <BorderPane.margin>
+            <Insets right="10.0" />
+         </BorderPane.margin>
+      </ButtonBar>
+   </bottom>
+   <center>
+      <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="585.0" prefWidth="767.0">
+               <children>
+                  <ImageView fitHeight="208.0" fitWidth="304.0" layoutX="466.0" layoutY="201.0" opacity="0.7" pickOnBounds="true" preserveRatio="true" style="-fx-view-order: 10;">
+                     <image>
+                        <Image url="@racecarleft.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="300.0" fitWidth="300.0" layoutX="135.0" layoutY="131.0" opacity="0.9" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+                     <image>
+                        <Image url="@racecar.png" />
+                     </image>
+                  </ImageView>
+                  <Line endX="-100.0" endY="194.0" layoutX="190.0" layoutY="179.0" startX="-100.0" startY="23.0" />
+                  <Line endX="-56.0" layoutX="167.0" layoutY="201.0" startX="-77.0" />
+                  <Line endX="-56.0" layoutX="167.0" layoutY="373.0" startX="-77.0" />
+                  <Line endX="-20.0" endY="194.0" layoutX="383.0" layoutY="278.0" startX="-182.0" startY="194.0" />
+                  <Line endX="-99.5" endY="186.5" layoutX="463.0" layoutY="285.0" startX="-99.5" startY="165.0" />
+                  <Line endX="-20.0" endY="194.0" layoutX="374.0" layoutY="-107.0" startX="-154.0" startY="194.0" />
+                  <Line endX="-99.5" endY="179.0" layoutX="319.0" layoutY="-68.0" startX="-99.5" startY="156.0" />
+                  <Line endX="-99.5" endY="179.0" layoutX="454.0" layoutY="-68.0" startX="-99.5" startY="156.0" />
+                  <Line endX="-99.5" endY="186.5" layoutX="300.0" layoutY="285.0" startX="-99.5" startY="165.0" />
+                  <Line endX="122.0" endY="-3.0517578125E-5" layoutX="611.0" layoutY="332.0" startX="-120.0" startY="-6.103515625E-5" strokeWidth="2.0" />
+                  <JFXTextField fx:id="cwFL" labelFloat="true" layoutX="129.0" layoutY="112.0" prefHeight="26.0" prefWidth="49.0" promptText="Weight" />
+                  <JFXTextField fx:id="cwFR" labelFloat="true" layoutX="381.0" layoutY="112.0" prefHeight="26.0" prefWidth="49.0" promptText="Weight" />
+                  <JFXTextField fx:id="cwRR" labelFloat="true" layoutX="381.0" layoutY="281.0" prefHeight="26.0" prefWidth="49.0" promptText="Weight" />
+                  <JFXTextField fx:id="cwRL" labelFloat="true" layoutX="129.0" layoutY="281.0" prefHeight="26.0" prefWidth="49.0" promptText="Weight" />
+                  <JFXTextField fx:id="wb" labelFloat="true" layoutX="8.0" layoutY="268.0" prefHeight="26.0" prefWidth="76.0" promptText="Wheelbase" />
+                  <JFXTextField fx:id="fTrack" labelFloat="true" layoutX="209.0" layoutY="28.0" prefWidth="155.0" promptText="Front track" />
+                  <JFXTextField fx:id="rTrack" labelFloat="true" layoutX="206.0" layoutY="496.0" promptText="Rear track" />
+                  <JFXSlider fx:id="cwFL_Slider" blockIncrement="50.0" disable="true" layoutX="142.0" layoutY="144.0" majorTickUnit="150.0" max="1000.0" min="50.0" orientation="VERTICAL" prefHeight="116.0" prefWidth="46.0" showTickLabels="true" showTickMarks="true" />
+                  <JFXSlider fx:id="cwFR_Slider" blockIncrement="50.0" disable="true" layoutX="392.0" layoutY="144.0" majorTickUnit="150.0" max="1000.0" min="50.0" orientation="VERTICAL" prefHeight="116.0" prefWidth="46.0" showTickLabels="true" showTickMarks="true" />
+                  <JFXSlider fx:id="cwRR_Slider" blockIncrement="50.0" disable="true" layoutX="388.0" layoutY="316.0" majorTickUnit="150.0" max="1000.0" min="50.0" orientation="VERTICAL" prefHeight="116.0" prefWidth="46.0" showTickLabels="true" showTickMarks="true" />
+                  <JFXSlider fx:id="cwRL_Slider" blockIncrement="50.0" disable="true" layoutX="131.0" layoutY="316.0" majorTickUnit="150.0" max="1000.0" min="50.0" orientation="VERTICAL" prefHeight="116.0" prefWidth="46.0" showTickLabels="true" showTickMarks="true" />
+                  <JFXTextField fx:id="cog" labelFloat="true" layoutX="580.0" layoutY="359.0" prefHeight="26.0" prefWidth="49.0" promptText="CoG Height" text="1" />
+                  <JFXSlider fx:id="cog_Slider" blockIncrement="50.0" layoutX="587.0" layoutY="271.0" max="200.0" min="10.0" orientation="VERTICAL" prefHeight="65.0" prefWidth="46.0" stylesheets="@COG_Slider.css" />
+               </children>
+            </AnchorPane>
+         </children>
+      </StackPane>
+   </center>
+</BorderPane>

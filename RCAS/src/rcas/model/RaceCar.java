@@ -7,7 +7,7 @@ import javafx.beans.property.StringProperty;
 
 /**
  * Represents a Race Car.
- * 
+ *
  * @author suy
  *
  */
@@ -64,8 +64,8 @@ public class RaceCar {
 	 * Wheelbase: 2.6m<br>
 	 * Center of Gravity Height: 0.5m<br>
 	 * Tires: Default front and rear Tire Model
-	 * 
-	 * 
+	 *
+	 *
 	 * @param cornerWeightFL
 	 *            - Front Left corner weight in kg.
 	 * @param cornerWeightFR
@@ -102,7 +102,7 @@ public class RaceCar {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return - the name of this car.
 	 */
 	public StringProperty nameProperty() {
@@ -125,7 +125,7 @@ public class RaceCar {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return - the front track in m.
 	 */
 	public DoubleProperty frontTrackProperty() {
@@ -148,7 +148,7 @@ public class RaceCar {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return - the rear track in m.
 	 */
 	public DoubleProperty rearTrackProperty() {
@@ -171,7 +171,7 @@ public class RaceCar {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return - wheelbase in m.
 	 */
 	public DoubleProperty wheelbaseProperty() {
@@ -194,7 +194,7 @@ public class RaceCar {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return - center of gravity height in m.
 	 */
 	public DoubleProperty cogHeightProperty() {
@@ -202,7 +202,7 @@ public class RaceCar {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return - front roll distribution coefficient (0-1).
 	 */
 	public Double getFrontRollDist() {
@@ -210,7 +210,7 @@ public class RaceCar {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param frontRollDist
 	 *            - front roll distribution coefficient (0-1).
 	 */
@@ -219,7 +219,7 @@ public class RaceCar {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return - front roll distribution property.
 	 */
 	public DoubleProperty frontRollDistProperty() {
@@ -242,7 +242,7 @@ public class RaceCar {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return - corner weight FL in kg.
 	 */
 	public DoubleProperty cornerWeightFLProperty() {
@@ -265,7 +265,7 @@ public class RaceCar {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return - corner weight FR in kg.
 	 */
 	public DoubleProperty cornerWeightFRProperty() {
