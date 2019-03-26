@@ -1,21 +1,19 @@
 package rcas.controller;
 
 import com.jfoenix.controls.*;
-import com.jfoenix.validation.base.ValidatorBase;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.util.converter.NumberStringConverter;
+import rcas.model.MagicFormulaTireModel;
 import rcas.model.RaceCar;
+import rcas.model.TireModel;
 
 @SuppressWarnings("Duplicates")
 public class RCASMainController {
@@ -112,6 +110,9 @@ public class RCASMainController {
 			if (selLabel.getUserData() != null) {
 
 				displayRaceCar((RaceCar) listView.getSelectionModel().getSelectedItem().getUserData());
+				tm     .setDisable(false);
+				showMMM.setDisable(false);
+
 
 			} else {
 
@@ -157,15 +158,15 @@ public class RCASMainController {
 		titleFront.setStyle("-fx-font-size: 15; -fx-font-weight: bold");
 		pane.add(titleFront, 0,0);
 
-		JFXTextField cF  = createTextField("Slip Angle Coefficient C");
+		JFXTextField cF  = createAdvInfoTF("Slip Angle Coefficient C");
 		pane.add(cF,  0,1);
-		JFXTextField bF  = createTextField("Slip Angle Coefficient B");
+		JFXTextField bF  = createAdvInfoTF("Slip Angle Coefficient B");
 		pane.add(bF,  0,2);
-		JFXTextField eF  = createTextField("Slip Angle Coefficient E");
+		JFXTextField eF  = createAdvInfoTF("Slip Angle Coefficient E");
 		pane.add(eF,  0,3);
-		JFXTextField kaF = createTextField("Load Coefficient KA");
+		JFXTextField kaF = createAdvInfoTF("Load Coefficient KA");
 		pane.add(kaF, 0,4);
-		JFXTextField kbF = createTextField("Load Coefficient KA");
+		JFXTextField kbF = createAdvInfoTF("Load Coefficient KA");
 		pane.add(kbF, 0,5);
 
 
@@ -173,15 +174,15 @@ public class RCASMainController {
 		titleRear.setStyle("-fx-font-size: 15; -fx-font-weight: bold");
 		pane.add(titleRear, 2,0);
 
-		JFXTextField cR  = createTextField("Slip Angle Coefficient C");
+		JFXTextField cR  = createAdvInfoTF("Slip Angle Coefficient C");
 		pane.add(cR,  2,1);
-		JFXTextField bR  = createTextField("Slip Angle Coefficient B");
+		JFXTextField bR  = createAdvInfoTF("Slip Angle Coefficient B");
 		pane.add(bR,  2,2);
-		JFXTextField eR  = createTextField("Slip Angle Coefficient E");
+		JFXTextField eR  = createAdvInfoTF("Slip Angle Coefficient E");
 		pane.add(eR,  2,3);
-		JFXTextField kaR = createTextField("Load Coefficient KA");
+		JFXTextField kaR = createAdvInfoTF("Load Coefficient KA");
 		pane.add(kaR, 2,4);
-		JFXTextField kbR = createTextField("Load Coefficient KA");
+		JFXTextField kbR = createAdvInfoTF("Load Coefficient KA");
 		pane.add(kbR, 2,5);
 
 		Separator separator = new Separator();
@@ -189,6 +190,29 @@ public class RCASMainController {
 
 		pane.add(separator, 1,1,1,5);
 
+		/**
+		 *
+		 */
+		RaceCar raceCar = (RaceCar) listView.getSelectionModel().getSelectedItem().getUserData();
+
+		MagicFormulaTireModel tmF = (MagicFormulaTireModel) raceCar.getFrontAxleTireModel();
+		MagicFormulaTireModel tmR = (MagicFormulaTireModel) raceCar.getRearAxleTireModel ();
+
+		cF .setText(String.valueOf(tmF.getSlipAngleCoefficientC()));
+		bF .setText(String.valueOf(tmF.getSlipAngleCoefficientB()));
+		eF .setText(String.valueOf(tmF.getSlipAngleCoefficientE()));
+		kaF.setText(String.valueOf(tmF.getLoadCoefficientKA()));
+		kbF.setText(tmF.getLoadCoefficientKB() + "   / 10_000");
+
+		cR .setText(String.valueOf(tmR.getSlipAngleCoefficientC()));
+		bR .setText(String.valueOf(tmR.getSlipAngleCoefficientB()));
+		eR .setText(String.valueOf(tmR.getSlipAngleCoefficientE()));
+		kaR.setText(String.valueOf(tmR.getLoadCoefficientKA()));
+		kbR.setText(tmR.getLoadCoefficientKB() + "   / 10_000");
+
+		/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+		JFXDialog jfxDialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
 
 
 		JFXButton save = new JFXButton("Save Axle Tire Models");
@@ -197,18 +221,46 @@ public class RCASMainController {
 		save.setButtonType(JFXButton.ButtonType.RAISED);
 		save.setStyle("-fx-background-color:  lightgreen");
 
+		// TODO: Save Tire Models to RaceCar
+		save.setOnAction(e -> {
+
+			raceCar.setFrontAxleTireModel(
+					new MagicFormulaTireModel(
+							Double.valueOf(cF .getText()),
+							Double.valueOf(bF .getText()),
+							Double.valueOf(eF .getText()),
+							Double.valueOf(kaF.getText()),
+							Double.valueOf(kbF.getText().replace("/ 10_000", "")) / 10_000));
+
+			raceCar.setRearAxleTireModel(
+					new MagicFormulaTireModel(
+							Double.valueOf(cR .getText()),
+							Double.valueOf(bR .getText()),
+							Double.valueOf(eR .getText()),
+							Double.valueOf(kaR.getText()),
+							Double.valueOf(kbR.getText().replace("/ 10_000", "")) / 10_000));
+
+
+			jfxDialog.close();
+
+		});
+
+
+
+
+
 		pane.add(save, 2,6);
 
 		content.setBody(pane);
-		
 
-		JFXDialog jfxDialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+
+
 
 		jfxDialog.show();
 
 	}
 
-	private JFXTextField createTextField(String name) {
+	private JFXTextField createAdvInfoTF(String name) {
 
 		JFXTextField tf = new JFXTextField();
 		tf.setPromptText(name);

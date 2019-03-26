@@ -81,8 +81,8 @@
                   <JFXTextField fx:id="rTrack" labelFloat="true" layoutX="206.0" layoutY="496.0" prefWidth="155.0" promptText="Rear track" />
                   <JFXTextField fx:id="cog" labelFloat="true" layoutX="572.0" layoutY="234.0" prefHeight="26.0" prefWidth="76.0" promptText="CoG Height" />
                   <JFXTextField fx:id="frd" labelFloat="true" layoutX="530.0" layoutY="360.0" prefWidth="155.0" promptText="Front roll distribution" />
-                  <JFXButton fx:id="tm" buttonType="RAISED" layoutX="530.0" layoutY="494.0" onAction="#advancedAxleModelPopUp" prefHeight="26.0" prefWidth="155.0" style="-fx-background-color: lightgray;" text="Axle Tire Models" />
-                  <JFXButton fx:id="showMMM" buttonType="RAISED" layoutX="530.0" layoutY="530.0" prefHeight="26.0" prefWidth="155.0" style="-fx-background-color: lightblue;" text="MMM - Diagram" />
+                  <JFXButton fx:id="tm" buttonType="RAISED" disable="true" layoutX="530.0" layoutY="494.0" onAction="#advancedAxleModelPopUp" prefHeight="26.0" prefWidth="155.0" style="-fx-background-color: lightgray;" text="Axle Tire Models" />
+                  <JFXButton fx:id="showMMM" buttonType="RAISED" disable="true" layoutX="530.0" layoutY="530.0" prefHeight="26.0" prefWidth="155.0" style="-fx-background-color: lightblue;" text="MMM - Diagram" />
                   <JFXSlider fx:id="cwFL_Slider" blockIncrement="50.0" disable="true" layoutX="142.0" layoutY="144.0" majorTickUnit="150.0" max="1000.0" min="50.0" orientation="VERTICAL" prefHeight="116.0" prefWidth="46.0" showTickLabels="true" showTickMarks="true" />
                   <JFXSlider fx:id="cwFR_Slider" blockIncrement="50.0" disable="true" layoutX="392.0" layoutY="144.0" majorTickUnit="150.0" max="1000.0" min="50.0" orientation="VERTICAL" prefHeight="116.0" prefWidth="46.0" showTickLabels="true" showTickMarks="true" />
                   <JFXSlider fx:id="cwRR_Slider" blockIncrement="50.0" disable="true" layoutX="388.0" layoutY="316.0" majorTickUnit="150.0" max="1000.0" min="50.0" orientation="VERTICAL" prefHeight="116.0" prefWidth="46.0" showTickLabels="true" showTickMarks="true" />

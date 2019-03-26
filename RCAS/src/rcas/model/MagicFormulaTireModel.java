@@ -133,5 +133,26 @@ public class MagicFormulaTireModel implements TireModel {
 				this.getName(), slipAngleCoefficientC.get(), slipAngleCoefficientB.get(), slipAngleCoefficientE.get(),
 				loadCoefficientKA.get(), loadCoefficientKB.get());
 	}
+
+	public double getSlipAngleCoefficientC() {
+		return slipAngleCoefficientC.get();
+	}
+
+	public double getSlipAngleCoefficientB() {
+		return slipAngleCoefficientB.get();
+	}
+
+	public double getSlipAngleCoefficientE() {
+		return slipAngleCoefficientE.get();
+	}
+
+	public double getLoadCoefficientKA() {
+		return loadCoefficientKA.get();
+	}
+
+	public double getLoadCoefficientKB() {
+		return loadCoefficientKB.get() * 10000;
+	}
+
 }
 
