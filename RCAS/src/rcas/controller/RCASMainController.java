@@ -1,6 +1,7 @@
 package rcas.controller;
 
 import com.jfoenix.controls.*;
+import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
@@ -150,7 +151,7 @@ public class RCASMainController {
 		content.setPrefWidth(600);
 
 		GridPane pane = new GridPane();
-		pane.setVgap(35);
+		pane.setVgap(45);
 		pane.setHgap(35);
 		pane.setAlignment(Pos.CENTER);
 
@@ -158,15 +159,15 @@ public class RCASMainController {
 		titleFront.setStyle("-fx-font-size: 15; -fx-font-weight: bold");
 		pane.add(titleFront, 0,0);
 
-		JFXTextField cF  = createAdvInfoTF("Slip Angle Coefficient C");
+		JFXTextField cF  = createAdvInfoTF("Slip Angle Coefficient C", 0.1,15.0);
 		pane.add(cF,  0,1);
-		JFXTextField bF  = createAdvInfoTF("Slip Angle Coefficient B");
+		JFXTextField bF  = createAdvInfoTF("Slip Angle Coefficient B", 1.0, 45.0);
 		pane.add(bF,  0,2);
-		JFXTextField eF  = createAdvInfoTF("Slip Angle Coefficient E");
+		JFXTextField eF  = createAdvInfoTF("Slip Angle Coefficient E", -15.0, 20.0);
 		pane.add(eF,  0,3);
-		JFXTextField kaF = createAdvInfoTF("Load Coefficient KA");
+		JFXTextField kaF = createAdvInfoTF("Load Coefficient KA", 1.0, 5.0);
 		pane.add(kaF, 0,4);
-		JFXTextField kbF = createAdvInfoTF("Load Coefficient KA");
+		JFXTextField kbF = createAdvInfoTF("Load Coefficient KA", 0.1, 1.5);
 		pane.add(kbF, 0,5);
 
 
@@ -174,15 +175,15 @@ public class RCASMainController {
 		titleRear.setStyle("-fx-font-size: 15; -fx-font-weight: bold");
 		pane.add(titleRear, 2,0);
 
-		JFXTextField cR  = createAdvInfoTF("Slip Angle Coefficient C");
+		JFXTextField cR  = createAdvInfoTF("Slip Angle Coefficient C", 0.1,15.0);
 		pane.add(cR,  2,1);
-		JFXTextField bR  = createAdvInfoTF("Slip Angle Coefficient B");
+		JFXTextField bR  = createAdvInfoTF("Slip Angle Coefficient B", 1.0, 45.0);
 		pane.add(bR,  2,2);
-		JFXTextField eR  = createAdvInfoTF("Slip Angle Coefficient E");
+		JFXTextField eR  = createAdvInfoTF("Slip Angle Coefficient E", -15.0, 20.0);
 		pane.add(eR,  2,3);
-		JFXTextField kaR = createAdvInfoTF("Load Coefficient KA");
+		JFXTextField kaR = createAdvInfoTF("Load Coefficient KA", 1.0, 5.0);
 		pane.add(kaR, 2,4);
-		JFXTextField kbR = createAdvInfoTF("Load Coefficient KA");
+		JFXTextField kbR = createAdvInfoTF("Load Coefficient KA", 0.1, 1.5);
 		pane.add(kbR, 2,5);
 
 		Separator separator = new Separator();
@@ -202,13 +203,13 @@ public class RCASMainController {
 		bF .setText(String.valueOf(tmF.getSlipAngleCoefficientB()));
 		eF .setText(String.valueOf(tmF.getSlipAngleCoefficientE()));
 		kaF.setText(String.valueOf(tmF.getLoadCoefficientKA()));
-		kbF.setText(tmF.getLoadCoefficientKB() + "   / 10_000");
+		kbF.setText(String.valueOf(tmF.getLoadCoefficientKB()));
 
 		cR .setText(String.valueOf(tmR.getSlipAngleCoefficientC()));
 		bR .setText(String.valueOf(tmR.getSlipAngleCoefficientB()));
 		eR .setText(String.valueOf(tmR.getSlipAngleCoefficientE()));
 		kaR.setText(String.valueOf(tmR.getLoadCoefficientKA()));
-		kbR.setText(tmR.getLoadCoefficientKB() + "   / 10_000");
+		kbR.setText(String.valueOf(tmR.getLoadCoefficientKB()));
 
 		/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -230,7 +231,7 @@ public class RCASMainController {
 							Double.valueOf(bF .getText()),
 							Double.valueOf(eF .getText()),
 							Double.valueOf(kaF.getText()),
-							Double.valueOf(kbF.getText().replace("/ 10_000", "")) / 10_000));
+							Double.valueOf(kbF.getText()) / 10_000));
 
 			raceCar.setRearAxleTireModel(
 					new MagicFormulaTireModel(
@@ -238,7 +239,7 @@ public class RCASMainController {
 							Double.valueOf(bR .getText()),
 							Double.valueOf(eR .getText()),
 							Double.valueOf(kaR.getText()),
-							Double.valueOf(kbR.getText().replace("/ 10_000", "")) / 10_000));
+							Double.valueOf(kbR.getText()) / 10_000));
 
 
 			jfxDialog.close();
@@ -246,30 +247,32 @@ public class RCASMainController {
 		});
 
 
-
-
-
 		pane.add(save, 2,6);
 
 		content.setBody(pane);
-
-
 
 
 		jfxDialog.show();
 
 	}
 
-	private JFXTextField createAdvInfoTF(String name) {
+
+	private JFXTextField createAdvInfoTF(String name, double min, double max) {
 
 		JFXTextField tf = new JFXTextField();
 		tf.setPromptText(name);
 		tf.setLabelFloat(true);
 		tf.setPrefWidth(155);
 
+		Validator val = new Validator(min, max);
+		tf.getValidators().add(val);
+
+		tf.focusedProperty().addListener((o, oldVal, newVal) ->{
+			if(!newVal) tf.validate();
+		});
 
 		return tf;
-	}
 
+	}
 
 }
