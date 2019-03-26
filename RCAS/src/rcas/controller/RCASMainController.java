@@ -1,20 +1,21 @@
 package rcas.controller;
 
 import com.jfoenix.controls.*;
-import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 import rcas.model.MagicFormulaTireModel;
 import rcas.model.RaceCar;
-import rcas.model.TireModel;
 
 @SuppressWarnings("Duplicates")
 public class RCASMainController {
@@ -151,8 +152,8 @@ public class RCASMainController {
 		content.setPrefWidth(600);
 
 		GridPane pane = new GridPane();
-		pane.setVgap(45);
-		pane.setHgap(35);
+		pane.setVgap(35);
+		pane.setHgap(50);
 		pane.setAlignment(Pos.CENTER);
 
 		Label titleFront = new Label("Front Axle Tire Model");
@@ -189,7 +190,7 @@ public class RCASMainController {
 		Separator separator = new Separator();
 		separator.setOrientation(Orientation.VERTICAL);
 
-		pane.add(separator, 1,1,1,5);
+		pane.add(separator, 1,0,1,6);
 
 		/**
 		 *
@@ -251,7 +252,6 @@ public class RCASMainController {
 
 		content.setBody(pane);
 
-
 		jfxDialog.show();
 
 	}
@@ -272,6 +272,16 @@ public class RCASMainController {
 		});
 
 		return tf;
+
+	}
+
+	@FXML
+	private void MMMDiagram() {
+
+		Stage stage = new Stage();
+		stage.setTitle("TEST");
+		stage.setScene(new Scene(new BorderPane()));
+		stage.show();
 
 	}
 

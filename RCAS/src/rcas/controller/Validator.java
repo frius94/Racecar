@@ -18,6 +18,8 @@ public class Validator extends ValidatorBase {
 	@Override
 	protected void eval() {
 
+		hasErrors.set(false);
+
 		TextInputControl textField = (TextInputControl) srcControl.get();
 
 		if (textField.getText() == null || textField.getText().isEmpty()) {
@@ -41,11 +43,6 @@ public class Validator extends ValidatorBase {
 
 		}
 
-		else {
-
-			hasErrors.set(false);
-
-		}
 
 	}
 
