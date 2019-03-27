@@ -17,11 +17,14 @@ import javafx.util.converter.NumberStringConverter;
 import rcas.model.MagicFormulaTireModel;
 import rcas.model.RaceCar;
 
+import java.util.ArrayList;
+
+
 @SuppressWarnings("Duplicates")
 public class RCASMainController {
 
 	@FXML
-	private JFXButton delete, tm, save, showMMM;
+	private JFXButton delete, tm, save, showMMM, saveAxle;
 
 	@FXML
 	private JFXSlider cog_Slider, cwFL_Slider, cwFR_Slider, cwRL_Slider, cwRR_Slider, frd_Slider;
@@ -35,6 +38,12 @@ public class RCASMainController {
 	@FXML
 	private JFXTextField cog, cwFL, cwFR, cwRL, cwRR, frd, wb, fTrack, rTrack, name;
 
+	@FXML
+	private JFXDialog jfxDialog;
+
+
+	ArrayList<Validator> advAxleModelValList = new ArrayList<>();
+
 
 	@FXML
 	private void initialize() {
@@ -42,6 +51,7 @@ public class RCASMainController {
 		createBindings();
 		initListView();
 		initDefaultRaceCars();
+
 		delete.setOnAction(e -> clearAllFields());
 
 	}
@@ -147,6 +157,8 @@ public class RCASMainController {
 	@FXML
 	private void advancedAxleModelPopUp() {
 
+		advAxleModelValList.clear();
+
 		JFXDialogLayout content = new JFXDialogLayout();
 		content.setHeading(new Text("Tire Model Configuration"));
 		content.setPrefWidth(600);
@@ -171,6 +183,7 @@ public class RCASMainController {
 		JFXTextField kbF = createAdvInfoTF("Load Coefficient KA", 0.1, 1.5);
 		pane.add(kbF, 0,5);
 
+		cF.getValidators().get(0).getHasErrors();
 
 		Label titleRear = new Label("Rear Axle Tire Model");
 		titleRear.setStyle("-fx-font-size: 15; -fx-font-weight: bold");
@@ -214,17 +227,19 @@ public class RCASMainController {
 
 		/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-		JFXDialog jfxDialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+		jfxDialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
 
 
-		JFXButton save = new JFXButton("Save Axle Tire Models");
-		save.setPrefWidth(155);
-		save.setPrefHeight(26);
-		save.setButtonType(JFXButton.ButtonType.RAISED);
-		save.setStyle("-fx-background-color:  lightgreen");
+		saveAxle = new JFXButton("Save Axle Tire Models");
+		saveAxle.setPrefWidth(155);
+		saveAxle.setPrefHeight(26);
+		saveAxle.setButtonType(JFXButton.ButtonType.RAISED);
+		saveAxle.setStyle("-fx-background-color:  lightgreen");
 
 		// TODO: Save Tire Models to RaceCar
-		save.setOnAction(e -> {
+		saveAxle.setOnAction(e -> {
+
+			System.out.println("PRESSED");
 
 			raceCar.setFrontAxleTireModel(
 					new MagicFormulaTireModel(
@@ -248,14 +263,14 @@ public class RCASMainController {
 		});
 
 
-		pane.add(save, 2,6);
+		
+		pane.add(saveAxle, 2,6);
 
 		content.setBody(pane);
 
 		jfxDialog.show();
 
 	}
-
 
 	private JFXTextField createAdvInfoTF(String name, double min, double max) {
 
@@ -266,12 +281,29 @@ public class RCASMainController {
 
 		Validator val = new Validator(min, max);
 		tf.getValidators().add(val);
+		advAxleModelValList.add(val);
 
 		tf.focusedProperty().addListener((o, oldVal, newVal) ->{
-			if(!newVal) tf.validate();
+			if(!newVal) {
+				System.out.println("CHANGED");
+				tf.validate();
+				advAxleModelValButtonDisable();
+
+			}
 		});
 
 		return tf;
+
+	}
+
+	private void advAxleModelValButtonDisable() {
+
+		saveAxle.setDisable(false);
+
+		for(Validator val : advAxleModelValList) {
+			if(val.getHasErrors()) saveAxle.setDisable(true);
+
+		}
 
 	}
 
@@ -284,5 +316,7 @@ public class RCASMainController {
 		stage.show();
 
 	}
+
+
 
 }

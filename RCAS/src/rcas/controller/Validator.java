@@ -2,7 +2,19 @@ package rcas.controller;
 
 import com.jfoenix.validation.base.ValidatorBase;
 import javafx.beans.DefaultProperty;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
+
+/**
+ * Field validation, that is applied on text input
+ * controls such as {@link TextField} and {@link TextArea}
+ * with a min and max Double value
+ *
+ * @author Christopher O'Connor
+ * @version 1.0
+ * @since 2019-03-26
+ */
 
 @DefaultProperty(value = "icon")
 public class Validator extends ValidatorBase {
@@ -14,6 +26,7 @@ public class Validator extends ValidatorBase {
 		this.min = min;
 		this.max = max;
 	}
+
 
 	@Override
 	protected void eval() {
@@ -42,7 +55,6 @@ public class Validator extends ValidatorBase {
 			hasErrors.set(true);
 
 		}
-
 
 	}
 
