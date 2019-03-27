@@ -3,19 +3,20 @@ package rcas.controller;
 import com.jfoenix.controls.*;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
+import rcas.RCASMain;
 import rcas.model.MagicFormulaTireModel;
 import rcas.model.RaceCar;
+import rcas.util.CorneringAnalyserUtil;
 
 import java.util.ArrayList;
 
@@ -42,7 +43,11 @@ public class RCASMainController {
 	private JFXDialog jfxDialog;
 
 
-	ArrayList<Validator> advAxleModelValList = new ArrayList<>();
+	private ArrayList<Validator> advAxleModelValList = new ArrayList<>();
+	private ArrayList<Validator> settingsValList     = new ArrayList<>();
+
+	private CorneringAnalyserUtil corneringUtil = new CorneringAnalyserUtil();
+
 
 
 	@FXML
@@ -263,7 +268,7 @@ public class RCASMainController {
 		});
 
 
-		
+
 		pane.add(saveAxle, 2,6);
 
 		content.setBody(pane);
@@ -308,12 +313,26 @@ public class RCASMainController {
 	}
 
 	@FXML
-	private void MMMDiagram() {
+	private void MMMDiagram() throws Exception {
 
-		Stage stage = new Stage();
-		stage.setTitle("TEST");
-		stage.setScene(new Scene(new BorderPane()));
-		stage.show();
+
+		RCASMMMController mmmController = new RCASMMMController((RaceCar) listView.getSelectionModel().getSelectedItem().getUserData());
+
+		FXMLLoader fxmlLoader = new FXMLLoader();
+		fxmlLoader.setLocation(RCASMain.class.getResource("view/RCASMMMView.fxml"));
+		fxmlLoader.setController(mmmController);
+
+		Stage mmmStage = new Stage();
+
+		BorderPane mmmPane = (BorderPane) fxmlLoader.load();
+
+		mmmStage.setScene(new Scene(mmmPane));
+		mmmStage.setTitle("MMM Diagram Mz / Fy (Milliken Moment Method)");
+		mmmStage.setResizable(false);
+		mmmStage.centerOnScreen();
+
+		mmmStage.show();
+
 
 	}
 

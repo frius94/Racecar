@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <HBox fillHeight="false" prefHeight="550.0" BorderPane.alignment="CENTER">
+         <children>
+             <LineChart fx:id="mainChart" id="mainChart"
+                        prefWidth="600" prefHeight="600" animated="false"
+                        createSymbols="false" legendVisible="false">
+                 <xAxis>
+                     <NumberAxis fx:id="xAxis" side="BOTTOM" label="Lateral Acceleration Fy (G)" />
+                 </xAxis>
+                 <yAxis>
+                     <NumberAxis fx:id="yAxis" side="LEFT" label="Yaw-Moment (Nm)" />
+                 </yAxis>
+             </LineChart>
+         </children>
+      </HBox>
+   </center>
+</BorderPane>
