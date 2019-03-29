@@ -9,13 +9,17 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
+import org.controlsfx.control.Notifications;
 import rcas.RCASMain;
 import rcas.model.MagicFormulaTireModel;
 import rcas.model.RaceCar;
+
 import java.util.ArrayList;
 
 
@@ -53,8 +57,6 @@ public class RCASMainController {
 		initValidators();
 		initListView();
 		initDefaultRaceCars();
-
-		delete.setOnAction(e -> clearAllFields());
 
 	}
 
@@ -377,6 +379,20 @@ public class RCASMainController {
 		mmmStage.show();
 
 
+	}
+
+	@FXML
+	private void deleteRaceCar() {
+		if (listView.getSelectionModel().getSelectedItem().getText().equals("New RaceCar Model")) {
+			Notifications.create()
+					.position(Pos.TOP_RIGHT)
+					.title("Invalid action")
+					.text("Please choose a racecar")
+					.showError();
+		} else {
+		    clearAllFields();
+			listView.getItems().remove(listView.getSelectionModel().getSelectedIndex());
+		}
 	}
 
 
