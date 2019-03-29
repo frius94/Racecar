@@ -1,6 +1,11 @@
 package rcas.controller;
 
 import com.jfoenix.controls.*;
+import com.jfoenix.validation.RequiredFieldValidator;
+import com.jfoenix.validation.base.ValidatorBase;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,14 +14,18 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.NumberStringConverter;
 import rcas.RCASMain;
 import rcas.model.MagicFormulaTireModel;
 import rcas.model.RaceCar;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.regex.Pattern;
 
 
 @SuppressWarnings("Duplicates")
@@ -41,9 +50,9 @@ public class RCASMainController {
 	private JFXDialog jfxDialog;
 
 
-	private ArrayList<Validator> advAxleModelValList = new ArrayList<>();
-	private ArrayList<Validator> settingsValList     = new ArrayList<>();
-	private ArrayList<JFXTextField> valTextList      = new ArrayList<>();
+	private ArrayList<ValidatorBase> advAxleModelValList = new ArrayList<>();
+	private ArrayList<ValidatorBase> settingsValList     = new ArrayList<>();
+	private ArrayList<JFXTextField> valTextList          = new ArrayList<>();
 
 
 	@FXML
@@ -53,8 +62,6 @@ public class RCASMainController {
 		initValidators();
 		initListView();
 		initDefaultRaceCars();
-
-		delete.setOnAction(e -> clearAllFields());
 
 	}
 
@@ -83,9 +90,13 @@ public class RCASMainController {
 
 	private void addVal(JFXTextField tf, double min, double max) {
 
-		Validator val = new Validator(min, max);
-		tf.getValidators().add(val);
-		settingsValList.add(val);
+		RequiredFieldValidator reqVal = new RequiredFieldValidator("Required");
+		RangeVal rangeVal             = new RangeVal(min, max);
+
+		tf.getValidators().addAll(reqVal, rangeVal);
+
+		Collections.addAll(settingsValList, rangeVal, reqVal);
+
 		valTextList.add(tf);
 
 
@@ -102,7 +113,7 @@ public class RCASMainController {
 
 		save.setDisable(false);
 
-		for(Validator val : settingsValList) {
+		for(ValidatorBase val : settingsValList) {
 			if(val.getHasErrors()) save.setDisable(true);
 
 		}
@@ -111,15 +122,35 @@ public class RCASMainController {
 
 	private void createBindings() {
 
-		cwFL.textProperty().bindBidirectional(cwFL_Slider.valueProperty(), new NumberStringConverter());
-		cwFR.textProperty().bindBidirectional(cwFR_Slider.valueProperty(), new NumberStringConverter());
-		cwRL.textProperty().bindBidirectional(cwRL_Slider.valueProperty(), new NumberStringConverter());
-		cwRR.textProperty().bindBidirectional(cwRR_Slider.valueProperty(), new NumberStringConverter());
-		cog .textProperty().bindBidirectional( cog_Slider.valueProperty(), new NumberStringConverter("#.0"));
-		frd .textProperty().bindBidirectional( frd_Slider.valueProperty(), new NumberStringConverter("#.0"));
+		initDoubleVal(cwFL).textProperty().bindBidirectional(cwFL_Slider.valueProperty(), new NumberStringConverter());
+		initDoubleVal(cwFR).textProperty().bindBidirectional(cwFR_Slider.valueProperty(), new NumberStringConverter());
+		initDoubleVal(cwRL).textProperty().bindBidirectional(cwRL_Slider.valueProperty(), new NumberStringConverter());
+		initDoubleVal(cwRR).textProperty().bindBidirectional(cwRR_Slider.valueProperty(), new NumberStringConverter());
+		initDoubleVal(cog ).textProperty().bindBidirectional( cog_Slider.valueProperty(), new NumberStringConverter("#.0"));
+		initDoubleVal(frd ).textProperty().bindBidirectional( frd_Slider.valueProperty(), new NumberStringConverter("#.0"));
+
+		initDoubleVal(rTrack);
+		initDoubleVal(fTrack);
+		initDoubleVal(wb);
 
 		clearAllFields();
 
+
+	}
+
+	private JFXTextField initDoubleVal(JFXTextField tf) {
+		ChangeListener<String> doubleValidator = new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
+					tf.setText(oldValue);
+				}
+			}
+		};
+
+		tf.textProperty().addListener(doubleValidator);
+
+		return tf;
 	}
 
 	private void clearAllFields() {
@@ -335,9 +366,15 @@ public class RCASMainController {
 		tf.setLabelFloat(true);
 		tf.setPrefWidth(155);
 
-		Validator val = new Validator(min, max);
-		tf.getValidators().add(val);
-		advAxleModelValList.add(val);
+		initDoubleVal(tf);
+
+		RequiredFieldValidator reqVal = new RequiredFieldValidator("Required");
+		RangeVal rangeVal             = new RangeVal(min, max);
+
+
+		tf.getValidators().addAll(reqVal, rangeVal);
+
+		Collections.addAll(advAxleModelValList, reqVal, rangeVal);
 
 		tf.setOnKeyReleased(e -> {
 			tf.validate();
@@ -352,7 +389,7 @@ public class RCASMainController {
 
 		saveAxle.setDisable(false);
 
-		for(Validator val : advAxleModelValList) {
+		for(ValidatorBase val : advAxleModelValList) {
 			if(val.getHasErrors()) saveAxle.setDisable(true);
 
 		}
