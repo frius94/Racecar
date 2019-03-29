@@ -43,6 +43,7 @@ public class RCASMainController {
 
 	private ArrayList<Validator> advAxleModelValList = new ArrayList<>();
 	private ArrayList<Validator> settingsValList     = new ArrayList<>();
+	private ArrayList<JFXTextField> valTextList = new ArrayList<>();
 
 
 	@FXML
@@ -68,7 +69,8 @@ public class RCASMainController {
 
 	private void initValidators() {
 
-		addVal(cog,    0.1,     2.0);
+		addVal(cog,   10.0,   200.0);
+		addVal(wb,     0.5,     6.0);
 		addVal(cwFL,  50.0, 1_000.0);
 		addVal(cwFR,  50.0, 1_000.0);
 		addVal(cwRL,  50.0, 1_000.0);
@@ -84,6 +86,7 @@ public class RCASMainController {
 		Validator val = new Validator(min, max);
 		tf.getValidators().add(val);
 		settingsValList.add(val);
+		valTextList.add(tf);
 
 		tf.focusedProperty().addListener((o, oldVal, newVal) ->{
 			if(!newVal) {
@@ -166,6 +169,10 @@ public class RCASMainController {
 				displayRaceCar((RaceCar) listView.getSelectionModel().getSelectedItem().getUserData());
 				tm     .setDisable(false);
 				showMMM.setDisable(false);
+
+				for (JFXTextField tf : valTextList) {
+					tf.validate();
+				}
 
 
 			} else {

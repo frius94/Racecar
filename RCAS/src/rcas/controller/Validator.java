@@ -37,21 +37,21 @@ public class Validator extends ValidatorBase {
 
 		if (textField.getText() == null || textField.getText().isEmpty()) {
 
-			super.setMessage("Field Required");
+			super.setMessage("Required");
 			hasErrors.set(true);
 
 		}
 
 		else if (!isDouble(textField.getText())) {
 
-			super.setMessage("Double Required");
+			super.setMessage("Number");
 			hasErrors.set(true);
 
 		}
 
 		else if (Double.valueOf(textField.getText()) < min || Double.valueOf(textField.getText()) > max) {
 
-			super.setMessage("[ " + min + " - " + max + " ]");
+			super.setMessage((int) min + " - " + (int) max);
 			hasErrors.set(true);
 
 		}
