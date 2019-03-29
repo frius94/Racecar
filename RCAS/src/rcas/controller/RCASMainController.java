@@ -15,6 +15,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
+import org.controlsfx.control.Notifications;
 import rcas.RCASMain;
 import rcas.model.MagicFormulaTireModel;
 import rcas.model.RaceCar;
@@ -56,8 +57,6 @@ public class RCASMainController {
 		initValidators();
 		initListView();
 		initDefaultRaceCars();
-
-		delete.setOnAction(e -> clearAllFields());
 
 	}
 
@@ -379,9 +378,27 @@ public class RCASMainController {
 
 		mmmStage.show();
 
-
 	}
 
+	@FXML
+	private void deleteRaceCar() {
+		if (listView.getSelectionModel().getSelectedItem().getText().equals("New RaceCar Model")) {
+			Notifications.create()
+					.position(Pos.TOP_RIGHT)
+					.title("Invalid action")
+					.text("Please choose a racecar")
+					.showError();
+		} else {
+			clearAllFields();
+			listView.getItems().remove(listView.getSelectionModel().getSelectedIndex());
+		}
+	}
 
-
+	@FXML
+	private void saveRaceCar() {
+		RaceCar raceCar = new RaceCar(name.getText(),Double.parseDouble(fTrack.getText()), Double.parseDouble(rTrack.getText()), Double.parseDouble(wb.getText()), Double.parseDouble(cog.getText()) / 100, Double.parseDouble(frd.getText()) / 100, Double.parseDouble(cwFL.getText()), Double.parseDouble(cwFR.getText()), Double.parseDouble(cwRL.getText()), Double.parseDouble(cwRR.getText()));
+		Label label = new Label(raceCar.getName());
+		label.setUserData(raceCar);
+		listView.getItems().add(listView.getItems().size() - 1, label);
+	}
 }
