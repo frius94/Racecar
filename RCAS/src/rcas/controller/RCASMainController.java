@@ -1,11 +1,6 @@
 package rcas.controller;
 
 import com.jfoenix.controls.*;
-import com.jfoenix.validation.RequiredFieldValidator;
-import com.jfoenix.validation.base.ValidatorBase;
-import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,23 +9,17 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.layout.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.NumberStringConverter;
-import org.controlsfx.control.Notifications;
 import rcas.RCASMain;
 import rcas.model.MagicFormulaTireModel;
 import rcas.model.RaceCar;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.regex.Pattern;
 
 
 @SuppressWarnings("Duplicates")
@@ -55,8 +44,8 @@ public class RCASMainController {
 	private JFXDialog jfxDialog;
 
 
-	private ArrayList<Validator> advAxleModelValList = new ArrayList<>();
-	private ArrayList<Validator> settingsValList     = new ArrayList<>();
+	private ArrayList<RangeVal> advAxleModelValList = new ArrayList<>();
+	private ArrayList<RangeVal> settingsValList     = new ArrayList<>();
 	private ArrayList<JFXTextField> valTextList = new ArrayList<>();
 
 
@@ -97,7 +86,7 @@ public class RCASMainController {
 
 	private void addVal(JFXTextField tf, double min, double max) {
 
-		Validator val = new Validator(min, max);
+		RangeVal val = new RangeVal(min, max);
 		tf.getValidators().add(val);
 		settingsValList.add(val);
 		valTextList.add(tf);
@@ -117,7 +106,7 @@ public class RCASMainController {
 
 		save.setDisable(false);
 
-		for(Validator val : settingsValList) {
+		for(RangeVal val : settingsValList) {
 			if(val.getHasErrors()) save.setDisable(true);
 
 		}
@@ -341,7 +330,7 @@ public class RCASMainController {
 		tf.setLabelFloat(true);
 		tf.setPrefWidth(155);
 
-		Validator val = new Validator(min, max);
+		RangeVal val = new RangeVal(min, max);
 		tf.getValidators().add(val);
 		advAxleModelValList.add(val);
 
@@ -362,7 +351,7 @@ public class RCASMainController {
 
 		saveAxle.setDisable(false);
 
-		for(Validator val : advAxleModelValList) {
+		for(RangeVal val : advAxleModelValList) {
 			if(val.getHasErrors()) saveAxle.setDisable(true);
 
 		}
