@@ -142,9 +142,9 @@ public class RCASMainController {
 		ChangeListener<String> doubleValidator = new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (!newValue.matches("\\d{0,7}([\\.]\\d{0,4})?")) {
+				if (!newValue.matches("\\d{0,4}([\\.]\\d{0,3})?")) {
 					tf.setText(oldValue);
-				}
+				} else tf.setText(newValue.replace(".", ""));
 			}
 		};
 
