@@ -144,7 +144,7 @@ public class RCASMainController {
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				if (!newValue.matches("\\d{0,4}([\\.]\\d{0,3})?")) {
 					tf.setText(oldValue);
-				} else tf.setText(newValue.replace(".", ""));
+				} else if (tf.getText().length() == 1) tf.setText(newValue.replace(".", ""));
 			}
 		};
 
