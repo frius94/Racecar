@@ -87,6 +87,23 @@ public class RaceCar {
 		this.rearAxleTireModel  = new MagicFormulaTireModel();
 	}
 
+	public RaceCar(String name, double frontTrack, double rearTrack, double wheelbase, double cogHeight, double frontRollDist, double cornerWeightFL, double cornerWeightFR, double cornerWeightRL, double cornerWeightRR) {
+		this.name = new SimpleStringProperty(name);
+		this.frontTrack = new SimpleDoubleProperty(frontTrack);
+		this.rearTrack = new SimpleDoubleProperty(rearTrack);
+		this.wheelbase = new SimpleDoubleProperty(wheelbase);
+		this.cogHeight = new SimpleDoubleProperty(cogHeight);
+		this.frontRollDist = new SimpleDoubleProperty(frontRollDist);
+		this.cornerWeightFL = new SimpleDoubleProperty(cornerWeightFL);
+		this.cornerWeightFR = new SimpleDoubleProperty(cornerWeightFR);
+		this.cornerWeightRL = new SimpleDoubleProperty(cornerWeightRL);
+		this.cornerWeightRR = new SimpleDoubleProperty(cornerWeightRR);
+
+		// initialize tire models with a default tire model.
+		this.frontAxleTireModel = new MagicFormulaTireModel();
+		this.rearAxleTireModel  = new MagicFormulaTireModel();
+	}
+
 	/**
 	 * @return the name
 	 */

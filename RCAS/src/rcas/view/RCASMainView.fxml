@@ -31,7 +31,7 @@
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
-            <JFXButton fx:id="save" buttonType="RAISED" prefHeight="26.0" prefWidth="155.0" style="-fx-background-color: lightgreen;" text="Save Model" />
+            <JFXButton fx:id="save" buttonType="RAISED" onAction="#saveRaceCar" prefHeight="26.0" prefWidth="155.0" style="-fx-background-color: lightgreen;" text="Save Model" />
             <JFXButton fx:id="delete" buttonType="RAISED" onAction="#deleteRaceCar" prefHeight="26.0" prefWidth="155.0" style="-fx-background-color: tomato;" text="Delete">
                <opaqueInsets>
                   <Insets />
