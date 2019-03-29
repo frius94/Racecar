@@ -43,7 +43,7 @@ public class RCASMainController {
 
 	private ArrayList<Validator> advAxleModelValList = new ArrayList<>();
 	private ArrayList<Validator> settingsValList     = new ArrayList<>();
-	private ArrayList<JFXTextField> valTextList = new ArrayList<>();
+	private ArrayList<JFXTextField> valTextList      = new ArrayList<>();
 
 
 	@FXML
@@ -88,13 +88,12 @@ public class RCASMainController {
 		settingsValList.add(val);
 		valTextList.add(tf);
 
-		tf.focusedProperty().addListener((o, oldVal, newVal) ->{
-			if(!newVal) {
 
-				tf.validate();
-				valSaveButtonDisable();
+		tf.setOnKeyReleased(e -> {
 
-			}
+			tf.validate();
+			valSaveButtonDisable();
+
 		});
 
 	}
@@ -177,8 +176,17 @@ public class RCASMainController {
 
 			} else {
 
-				// ADD NEW RACE CAR
+				// Remove Errors ...
+				displayRaceCar(new RaceCar("Car STD", 420, 420, 370, 370));
+
+				for (JFXTextField tf : valTextList) {
+					tf.validate();
+				}
+
 				clearAllFields();
+				/******************************/
+				//TODO: Add new Car start here :
+
 
 			}
 		}
@@ -331,13 +339,9 @@ public class RCASMainController {
 		tf.getValidators().add(val);
 		advAxleModelValList.add(val);
 
-		tf.focusedProperty().addListener((o, oldVal, newVal) ->{
-			if(!newVal) {
-
-				tf.validate();
-				advAxleModelValButtonDisable();
-
-			}
+		tf.setOnKeyReleased(e -> {
+			tf.validate();
+			advAxleModelValButtonDisable();
 		});
 
 		return tf;

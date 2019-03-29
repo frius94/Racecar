@@ -6,6 +6,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 /**
  * Field validation, that is applied on text input
  * controls such as {@link TextField} and {@link TextArea}
@@ -51,7 +54,9 @@ public class Validator extends ValidatorBase {
 
 		else if (Double.valueOf(textField.getText()) < min || Double.valueOf(textField.getText()) > max) {
 
-			super.setMessage((int) min + " - " + (int) max);
+			NumberFormat nf = new DecimalFormat("####.#");
+
+			super.setMessage(nf.format(min) + " - " + nf.format(max));
 			hasErrors.set(true);
 
 		}
@@ -67,6 +72,10 @@ public class Validator extends ValidatorBase {
 
 		} catch (NumberFormatException e) { return false; }
 
+	}
+
+	public void hasNoErrors() {
+		this.hasErrors.set(false);
 	}
 
 }
