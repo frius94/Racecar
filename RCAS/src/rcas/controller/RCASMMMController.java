@@ -3,8 +3,10 @@ package rcas.controller;
 import com.jfoenix.controls.JFXButton;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import rcas.model.MagicFormulaTireModel;
 import rcas.model.RaceCar;
 import rcas.util.CorneringAnalyserUtil;
 
@@ -15,6 +17,8 @@ public class RCASMMMController {
 
 	@FXML
 	private LineChart<Number, Number> mainChart;
+	@FXML
+	private BarChart<Number, Number> infoChart;
 
 
 
@@ -59,6 +63,14 @@ public class RCASMMMController {
 			XYChart.Series<Number, Number> curve = (XYChart.Series<Number, Number>) iterator.next();
 			curve.getNode().lookup(styleSelector).setStyle(lineStyle);
 		}
+	}
+
+	private void setChartBalance() {
+		double balanceValue = this.util.getMMMBalanceValue(this.raceCar);
+		double gripValue = this.util.getMMMGripValue(this.raceCar);
+		MagicFormulaTireModel tireModel = (MagicFormulaTireModel) this.raceCar.getFrontAxleTireModel();
+//		double controlValue = this.util.getMMMControlValue(raceCar,);
+
 	}
 
 
