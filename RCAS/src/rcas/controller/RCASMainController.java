@@ -1,6 +1,11 @@
 package rcas.controller;
 
 import com.jfoenix.controls.*;
+import com.jfoenix.validation.RequiredFieldValidator;
+import com.jfoenix.validation.base.ValidatorBase;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,11 +14,14 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.layout.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.NumberStringConverter;
 import org.controlsfx.control.Notifications;
 import rcas.RCASMain;
@@ -21,6 +29,8 @@ import rcas.model.MagicFormulaTireModel;
 import rcas.model.RaceCar;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.regex.Pattern;
 
 
 @SuppressWarnings("Duplicates")
@@ -57,6 +67,8 @@ public class RCASMainController {
 		initValidators();
 		initListView();
 		initDefaultRaceCars();
+
+		delete.setOnAction(e -> clearAllFields());
 
 	}
 
@@ -381,26 +393,6 @@ public class RCASMainController {
 
 	}
 
-	@FXML
-	private void deleteRaceCar() {
-		if (listView.getSelectionModel().getSelectedItem().getText().equals("New RaceCar Model")) {
-			Notifications.create()
-					.position(Pos.TOP_RIGHT)
-					.title("Invalid action")
-					.text("Please choose a racecar")
-					.showError();
-		} else {
-		    clearAllFields();
-			listView.getItems().remove(listView.getSelectionModel().getSelectedIndex());
-		}
-	}
 
-	@FXML
-    private void saveRaceCar() {
-	    RaceCar raceCar = new RaceCar(name.getText(),Double.parseDouble(fTrack.getText()), Double.parseDouble(rTrack.getText()), Double.parseDouble(wb.getText()), Double.parseDouble(cog.getText()) / 100, Double.parseDouble(frd.getText()) / 100, Double.parseDouble(cwFL.getText()), Double.parseDouble(cwFR.getText()), Double.parseDouble(cwRL.getText()), Double.parseDouble(cwRR.getText()));
-        Label label = new Label(raceCar.getName());
-        label.setUserData(raceCar);
-	    listView.getItems().add(listView.getItems().size() - 1, label);
-    }
 
 }

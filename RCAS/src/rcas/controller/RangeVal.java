@@ -2,9 +2,14 @@ package rcas.controller;
 
 import com.jfoenix.validation.base.ValidatorBase;
 import javafx.beans.DefaultProperty;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 /**
  * Field validation, that is applied on text input
@@ -17,12 +22,12 @@ import javafx.scene.control.TextInputControl;
  */
 
 @DefaultProperty(value = "icon")
-public class Validator extends ValidatorBase {
+public class RangeVal extends ValidatorBase {
 
 	private double min;
 	private double max;
 
-	public Validator(double min, double max) {
+	public RangeVal(double min, double max) {
 		this.min = min;
 		this.max = max;
 	}
@@ -35,25 +40,16 @@ public class Validator extends ValidatorBase {
 
 		TextInputControl textField = (TextInputControl) srcControl.get();
 
-		if (textField.getText() == null || textField.getText().isEmpty()) {
+		if ((textField.getText() != null || !textField.getText().isEmpty()) && isDouble(textField.getText())) {
 
-			super.setMessage("Required");
-			hasErrors.set(true);
+			if (Double.valueOf(textField.getText()) < min || Double.valueOf(textField.getText()) > max) {
 
-		}
+				NumberFormat nf = new DecimalFormat("####.#");
 
-		else if (!isDouble(textField.getText())) {
+				super.setMessage(nf.format(min) + " - " + nf.format(max));
+				hasErrors.set(true);
 
-			super.setMessage("Number");
-			hasErrors.set(true);
-
-		}
-
-		else if (Double.valueOf(textField.getText()) < min || Double.valueOf(textField.getText()) > max) {
-
-			super.setMessage((int) min + " - " + (int) max);
-			hasErrors.set(true);
-
+			}
 		}
 
 	}
@@ -68,5 +64,6 @@ public class Validator extends ValidatorBase {
 		} catch (NumberFormatException e) { return false; }
 
 	}
+
 
 }
