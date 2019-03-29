@@ -16,8 +16,6 @@ import javafx.util.converter.NumberStringConverter;
 import rcas.RCASMain;
 import rcas.model.MagicFormulaTireModel;
 import rcas.model.RaceCar;
-import rcas.util.CorneringAnalyserUtil;
-
 import java.util.ArrayList;
 
 
@@ -46,14 +44,12 @@ public class RCASMainController {
 	private ArrayList<Validator> advAxleModelValList = new ArrayList<>();
 	private ArrayList<Validator> settingsValList     = new ArrayList<>();
 
-	private CorneringAnalyserUtil corneringUtil = new CorneringAnalyserUtil();
-
-
 
 	@FXML
 	private void initialize() {
 
 		createBindings();
+		initValidators();
 		initListView();
 		initDefaultRaceCars();
 
@@ -67,6 +63,47 @@ public class RCASMainController {
 		label.setStyle("-fx-text-fill: forestgreen; -fx-font-weight: bold");
 
 		listView.getItems().add(label);
+
+	}
+
+	private void initValidators() {
+
+		addVal(cog,    0.1,     2.0);
+		addVal(cwFL,  50.0, 1_000.0);
+		addVal(cwFR,  50.0, 1_000.0);
+		addVal(cwRL,  50.0, 1_000.0);
+		addVal(cwRR,  50.0, 1_000.0);
+		addVal(frd,   20.0,    80.0);
+		addVal(fTrack, 1.2,     2.0);
+		addVal(rTrack, 1.2,     2.0);
+
+	}
+
+	private void addVal(JFXTextField tf, double min, double max) {
+
+		Validator val = new Validator(min, max);
+		tf.getValidators().add(val);
+		settingsValList.add(val);
+
+		tf.focusedProperty().addListener((o, oldVal, newVal) ->{
+			if(!newVal) {
+
+				tf.validate();
+				valSaveButtonDisable();
+
+			}
+		});
+
+	}
+
+	private void valSaveButtonDisable() {
+
+		save.setDisable(false);
+
+		for(Validator val : settingsValList) {
+			if(val.getHasErrors()) save.setDisable(true);
+
+		}
 
 	}
 
@@ -268,7 +305,6 @@ public class RCASMainController {
 		});
 
 
-
 		pane.add(saveAxle, 2,6);
 
 		content.setBody(pane);
@@ -290,7 +326,7 @@ public class RCASMainController {
 
 		tf.focusedProperty().addListener((o, oldVal, newVal) ->{
 			if(!newVal) {
-				System.out.println("CHANGED");
+
 				tf.validate();
 				advAxleModelValButtonDisable();
 
