@@ -112,6 +112,13 @@ public class RCASMainController {
 
 	}
 
+	private boolean isInputValid() {
+		for(JFXTextField tf : valTextList) {
+			if(tf.validate()) return false;
+		}
+		return true;
+	}
+
 	private void createBindings() {
 
 		cwFL.textProperty().bindBidirectional(cwFL_Slider.valueProperty(), new NumberStringConverter());
@@ -181,6 +188,8 @@ public class RCASMainController {
 
 				// ADD NEW RACE CAR
 				clearAllFields();
+				tm.setDisable(true);
+				showMMM.setDisable(true);
 
 			}
 		}
@@ -396,9 +405,17 @@ public class RCASMainController {
 
 	@FXML
 	private void saveRaceCar() {
-		RaceCar raceCar = new RaceCar(name.getText(),Double.parseDouble(fTrack.getText()), Double.parseDouble(rTrack.getText()), Double.parseDouble(wb.getText()), Double.parseDouble(cog.getText()) / 100, Double.parseDouble(frd.getText()) / 100, Double.parseDouble(cwFL.getText()), Double.parseDouble(cwFR.getText()), Double.parseDouble(cwRL.getText()), Double.parseDouble(cwRR.getText()));
-		Label label = new Label(raceCar.getName());
-		label.setUserData(raceCar);
-		listView.getItems().add(listView.getItems().size() - 1, label);
+	    if (isInputValid()) {
+            RaceCar raceCar = new RaceCar(name.getText(), Double.parseDouble(fTrack.getText()), Double.parseDouble(rTrack.getText()), Double.parseDouble(wb.getText()), Double.parseDouble(cog.getText()) / 100, Double.parseDouble(frd.getText()) / 100, Double.parseDouble(cwFL.getText()), Double.parseDouble(cwFR.getText()), Double.parseDouble(cwRL.getText()), Double.parseDouble(cwRR.getText()));
+            Label label = new Label(raceCar.getName());
+            label.setUserData(raceCar);
+            listView.getItems().add(listView.getItems().size() - 1, label);
+        } else {
+            Notifications.create()
+                    .position(Pos.TOP_RIGHT)
+                    .title("Invalid action")
+                    .text("Please fill every textfield with a value.")
+                    .showError();
+        }
 	}
 }

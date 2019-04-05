@@ -1,10 +1,12 @@
 package rcas.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import rcas.model.MagicFormulaTireModel;
 import rcas.model.RaceCar;
@@ -18,7 +20,9 @@ public class RCASMMMController {
 	@FXML
 	private LineChart<Number, Number> mainChart;
 	@FXML
-	private BarChart<Number, Number> infoChart;
+	private BarChart<String, Number> balanceChart, gripChart, controlChart, stabilityChart;
+	@FXML
+	private JFXTextField controlBeta, controlDelta, controlDeltaDelta, stabilityBeta, stabilityDelta, stabilityDeltaBeta;
 
 
 
@@ -42,7 +46,7 @@ public class RCASMMMController {
 
 	@FXML
 	private void initialize() {
-
+		setBalanceChart();
 		initChart();
 
 	}
@@ -65,11 +69,15 @@ public class RCASMMMController {
 		}
 	}
 
-	private void setChartBalance() {
+	private void setBalanceChart() {
 		double balanceValue = this.util.getMMMBalanceValue(this.raceCar);
-		double gripValue = this.util.getMMMGripValue(this.raceCar);
-		MagicFormulaTireModel tireModel = (MagicFormulaTireModel) this.raceCar.getFrontAxleTireModel();
-//		double controlValue = this.util.getMMMControlValue(raceCar,);
+		final NumberAxis xAxis = new NumberAxis(0, 10, 1);
+		final NumberAxis yAxis = new NumberAxis(-4000, 4000, 10);
+
+		XYChart.Series<String, Number> balanceSeries = new XYChart.Series<>();
+		balanceSeries.setName("Balance");
+		balanceSeries.getData().add(new XYChart.Data<>("Balance (Nm)", balanceValue));
+		balanceChart.getData().add(balanceSeries);
 
 	}
 
