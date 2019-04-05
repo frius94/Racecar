@@ -13,7 +13,7 @@ import rcas.model.RaceCar;
 import rcas.util.CorneringAnalyserUtil;
 
 import java.util.Iterator;
-
+@SuppressWarnings("Duplicates")
 public class RCASMMMController {
 
 
@@ -21,9 +21,6 @@ public class RCASMMMController {
 	private LineChart<Number, Number> mainChart;
 	@FXML
 	private BarChart<String, Number> balanceChart, gripChart, controlChart, stabilityChart;
-	@FXML
-	private JFXTextField controlBeta, controlDelta, controlDeltaDelta, stabilityBeta, stabilityDelta, stabilityDeltaBeta;
-
 
 
 	private RaceCar raceCar;
@@ -47,8 +44,10 @@ public class RCASMMMController {
 	@FXML
 	private void initialize() {
 		setBalanceChart();
+		setGripChart();
 		initChart();
-
+        setControlChart();
+        setStabilityChart();
 	}
 
 	private void initChart() {
@@ -70,16 +69,40 @@ public class RCASMMMController {
 	}
 
 	private void setBalanceChart() {
-		double balanceValue = this.util.getMMMBalanceValue(this.raceCar);
-		final NumberAxis xAxis = new NumberAxis(0, 10, 1);
-		final NumberAxis yAxis = new NumberAxis(-4000, 4000, 10);
-
+		double balanceValue = this.util.getMMMBalanceValue(raceCar);
+		balanceChart.setTitle("Balance in Nm");
 		XYChart.Series<String, Number> balanceSeries = new XYChart.Series<>();
-		balanceSeries.setName("Balance");
-		balanceSeries.getData().add(new XYChart.Data<>("Balance (Nm)", balanceValue));
+		balanceSeries.setName(raceCar.getName());
+		balanceSeries.getData().add(new XYChart.Data<>("", balanceValue));
 		balanceChart.getData().add(balanceSeries);
 
 	}
 
+	private void setGripChart() {
+        double gripValue = this.util.getMMMGripValue(raceCar);
+        gripChart.setTitle("Grip in m/s^2");
+        XYChart.Series<String, Number> gripSeries = new XYChart.Series<>();
+        gripSeries.setName(raceCar.getName());
+        gripSeries.getData().add(new XYChart.Data<>("", gripValue));
+        gripChart.getData().add(gripSeries);
+    }
 
+
+    private void setControlChart() {
+        double controlValue = this.util.getMMMControlValue(raceCar, 0.0, 0.0, 10.0);
+        controlChart.setTitle("Control in Nm/degree");
+        XYChart.Series<String, Number> controlSeries = new XYChart.Series<>();
+        controlSeries.setName(raceCar.getName());
+        controlSeries.getData().add(new XYChart.Data<>("", controlValue));
+        controlChart.getData().add(controlSeries);
+    }
+
+    private void setStabilityChart() {
+        double stabilityValue = this.util.getMMMStabilityValue(raceCar, 0.0, 0.0, 1.0);
+        stabilityChart.setTitle("Stability in Nm/degree");
+        XYChart.Series<String, Number> stabilitySeries = new XYChart.Series<>();
+        stabilitySeries.setName(raceCar.getName());
+        stabilitySeries.getData().add(new XYChart.Data<>("", stabilityValue));
+        stabilityChart.getData().add(stabilitySeries);
+    }
 }
