@@ -1,6 +1,10 @@
 package rcas.controller;
 
 import com.jfoenix.controls.*;
+import com.jfoenix.validation.RequiredFieldValidator;
+import com.jfoenix.validation.base.ValidatorBase;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +25,7 @@ import rcas.model.MagicFormulaTireModel;
 import rcas.model.RaceCar;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 @SuppressWarnings("Duplicates")
@@ -45,8 +50,7 @@ public class RCASMainController {
 	private JFXDialog jfxDialog;
 
 
-	private ArrayList<RangeVal> advAxleModelValList = new ArrayList<>();
-	private ArrayList<RangeVal> settingsValList     = new ArrayList<>();
+	private ArrayList<JFXTextField> advTextList = new ArrayList<>();
 	private ArrayList<JFXTextField> valTextList = new ArrayList<>();
 
 
@@ -81,54 +85,60 @@ public class RCASMainController {
 		addVal(fTrack, 1.2,     2.0);
 		addVal(rTrack, 1.2,     2.0);
 
+
+		//TODO: Unique Validator?
+		name.getValidators().add(new RequiredFieldValidator("Required"));
+		valTextList.add(name);
+
 	}
 
 	private void addVal(JFXTextField tf, double min, double max) {
 
-		RangeVal val = new RangeVal(min, max);
-		tf.getValidators().add(val);
-		settingsValList.add(val);
+		RequiredFieldValidator reqVal = new RequiredFieldValidator("Required");
+		RangeVal rangeVal             = new RangeVal(min, max);
+
+		tf.getValidators().addAll(reqVal, rangeVal);
+
 		valTextList.add(tf);
 
-		tf.focusedProperty().addListener((o, oldVal, newVal) ->{
-			if(!newVal) {
+		tf.setOnKeyReleased(e -> tf.validate());
 
-				tf.validate();
-				valSaveButtonDisable();
-
-			}
-		});
-
-	}
-
-	private void valSaveButtonDisable() {
-
-		save.setDisable(false);
-
-		for(RangeVal val : settingsValList) {
-			if(val.getHasErrors()) save.setDisable(true);
-
-		}
-
-	}
-
-	private boolean isInputValid() {
-		for(JFXTextField tf : valTextList) {
-			if(tf.validate()) return false;
-		}
-		return true;
 	}
 
 	private void createBindings() {
 
-		cwFL.textProperty().bindBidirectional(cwFL_Slider.valueProperty(), new NumberStringConverter());
-		cwFR.textProperty().bindBidirectional(cwFR_Slider.valueProperty(), new NumberStringConverter());
-		cwRL.textProperty().bindBidirectional(cwRL_Slider.valueProperty(), new NumberStringConverter());
-		cwRR.textProperty().bindBidirectional(cwRR_Slider.valueProperty(), new NumberStringConverter());
-		cog .textProperty().bindBidirectional( cog_Slider.valueProperty(), new NumberStringConverter("#.0"));
-		frd .textProperty().bindBidirectional( frd_Slider.valueProperty(), new NumberStringConverter("#.0"));
+		initDoubleVal(cwFL).textProperty().bindBidirectional(cwFL_Slider.valueProperty(), new NumberStringConverter());
+		initDoubleVal(cwFR).textProperty().bindBidirectional(cwFR_Slider.valueProperty(), new NumberStringConverter());
+		initDoubleVal(cwRL).textProperty().bindBidirectional(cwRL_Slider.valueProperty(), new NumberStringConverter());
+		initDoubleVal(cwRR).textProperty().bindBidirectional(cwRR_Slider.valueProperty(), new NumberStringConverter());
+		initDoubleVal(cog ).textProperty().bindBidirectional( cog_Slider.valueProperty(), new NumberStringConverter("#.0"));
+		initDoubleVal(frd ).textProperty().bindBidirectional( frd_Slider.valueProperty(), new NumberStringConverter("#.0"));
+
+		initDoubleVal(rTrack);
+		initDoubleVal(fTrack);
+		initDoubleVal(wb);
 
 		clearAllFields();
+
+	}
+
+	private JFXTextField initDoubleVal(JFXTextField tf) {
+
+		ChangeListener<String> doubleValidator = new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (!newValue.matches("[-]?\\d{0,7}[\\.]?\\d{0,4}")) {
+					tf.setText(oldValue);
+				}
+
+			}
+
+		};
+
+		tf.textProperty().addListener(doubleValidator);
+
+		return tf;
 
 	}
 
@@ -188,6 +198,7 @@ public class RCASMainController {
 
 				// ADD NEW RACE CAR
 				clearAllFields();
+
 				tm.setDisable(true);
 				showMMM.setDisable(true);
 
@@ -217,7 +228,7 @@ public class RCASMainController {
 	@FXML
 	private void advancedAxleModelPopUp() {
 
-		advAxleModelValList.clear();
+		advTextList.clear();
 
 		JFXDialogLayout content = new JFXDialogLayout();
 		content.setHeading(new Text("Tire Model Configuration"));
@@ -273,9 +284,11 @@ public class RCASMainController {
 		MagicFormulaTireModel tmF = (MagicFormulaTireModel) raceCar.getFrontAxleTireModel();
 		MagicFormulaTireModel tmR = (MagicFormulaTireModel) raceCar.getRearAxleTireModel ();
 
+
+
 		cF .setText(String.valueOf(tmF.getSlipAngleCoefficientC()));
 		bF .setText(String.valueOf(tmF.getSlipAngleCoefficientB()));
-		eF .setText(String.valueOf(tmF.getSlipAngleCoefficientE()));
+		eF .setText(String.valueOf(tmF.getSlipAngleCoefficientE()));    // TODO: Update Validator for Neg Numbers!
 		kaF.setText(String.valueOf(tmF.getLoadCoefficientKA()));
 		kbF.setText(String.valueOf(tmF.getLoadCoefficientKB()));
 
@@ -299,26 +312,27 @@ public class RCASMainController {
 		// TODO: Save Tire Models to RaceCar
 		saveAxle.setOnAction(e -> {
 
-			System.out.println("PRESSED");
+			if(valTextList(valTextList)) {
 
-			raceCar.setFrontAxleTireModel(
-					new MagicFormulaTireModel(
-							Double.valueOf(cF .getText()),
-							Double.valueOf(bF .getText()),
-							Double.valueOf(eF .getText()),
-							Double.valueOf(kaF.getText()),
-							Double.valueOf(kbF.getText()) / 10_000));
+				raceCar.setFrontAxleTireModel(
+						new MagicFormulaTireModel(
+								Double.valueOf(cF.getText()),
+								Double.valueOf(bF.getText()),
+								/*Double.valueOf(eF.getText())*/0.0,
+								Double.valueOf(kaF.getText()),
+								Double.valueOf(kbF.getText()) / 10_000));
 
-			raceCar.setRearAxleTireModel(
-					new MagicFormulaTireModel(
-							Double.valueOf(cR .getText()),
-							Double.valueOf(bR .getText()),
-							Double.valueOf(eR .getText()),
-							Double.valueOf(kaR.getText()),
-							Double.valueOf(kbR.getText()) / 10_000));
+				raceCar.setRearAxleTireModel(
+						new MagicFormulaTireModel(
+								Double.valueOf(cR.getText()),
+								Double.valueOf(bR.getText()),
+								/*Double.valueOf(eR.getText())*/0.0,
+								Double.valueOf(kaR.getText()),
+								Double.valueOf(kbR.getText()) / 10_000));
 
 
-			jfxDialog.close();
+				jfxDialog.close();
+			}
 
 		});
 
@@ -338,33 +352,34 @@ public class RCASMainController {
 		tf.setLabelFloat(true);
 		tf.setPrefWidth(155);
 
-		RangeVal val = new RangeVal(min, max);
-		tf.getValidators().add(val);
-		advAxleModelValList.add(val);
+		initDoubleVal(tf);
 
-		tf.focusedProperty().addListener((o, oldVal, newVal) ->{
-			if(!newVal) {
+		RequiredFieldValidator reqVal = new RequiredFieldValidator("Required");
+		RangeVal rangeVal             = new RangeVal(min, max);
 
-				tf.validate();
-				advAxleModelValButtonDisable();
+		tf.getValidators().addAll(reqVal, rangeVal);
 
-			}
-		});
+		advTextList.add(tf);
+
+		tf.setOnKeyReleased(e -> tf.validate());
 
 		return tf;
 
 	}
 
-	private void advAxleModelValButtonDisable() {
 
-		saveAxle.setDisable(false);
+	private boolean valTextList(ArrayList<JFXTextField> textFields) {
 
-		for(RangeVal val : advAxleModelValList) {
-			if(val.getHasErrors()) saveAxle.setDisable(true);
+		for (JFXTextField tf : textFields) {
+
+			if(!tf.validate()) return false;
 
 		}
 
+		return true;
+
 	}
+
 
 	@FXML
 	private void MMMDiagram() throws Exception {
@@ -405,11 +420,19 @@ public class RCASMainController {
 
 	@FXML
 	private void saveRaceCar() {
-	    if (isInputValid()) {
-            RaceCar raceCar = new RaceCar(name.getText(), Double.parseDouble(fTrack.getText()), Double.parseDouble(rTrack.getText()), Double.parseDouble(wb.getText()), Double.parseDouble(cog.getText()) / 100, Double.parseDouble(frd.getText()) / 100, Double.parseDouble(cwFL.getText()), Double.parseDouble(cwFR.getText()), Double.parseDouble(cwRL.getText()), Double.parseDouble(cwRR.getText()));
+
+	    if (valTextList(valTextList)) {
+
+	    	//TODO: If New RaceCar or already Selected One?
+	    	if(listView.getSelectionModel().getSelectedIndex() == listView.getItems().size() - 1) {}
+
+	    	RaceCar raceCar = new RaceCar(name.getText(), Double.parseDouble(fTrack.getText()), Double.parseDouble(rTrack.getText()), Double.parseDouble(wb.getText()), Double.parseDouble(cog.getText()) / 100, Double.parseDouble(frd.getText()) / 100, Double.parseDouble(cwFL.getText()), Double.parseDouble(cwFR.getText()), Double.parseDouble(cwRL.getText()), Double.parseDouble(cwRR.getText()));
+
             Label label = new Label(raceCar.getName());
             label.setUserData(raceCar);
             listView.getItems().add(listView.getItems().size() - 1, label);
+
+
         } else {
             Notifications.create()
                     .position(Pos.TOP_RIGHT)
@@ -417,5 +440,7 @@ public class RCASMainController {
                     .text("Please fill every textfield with a value.")
                     .showError();
         }
+
+
 	}
 }
