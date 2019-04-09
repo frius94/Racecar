@@ -55,6 +55,9 @@ public class RaceCar {
 	// rear axle tire model of the car.
 	private TireModel rearAxleTireModel;
 
+	//
+	private String color = "#f44b42";
+
 	/**
 	 * Creates a new Race Car Object with the given corner weights in kg and the
 	 * following defaults: <br>
@@ -88,12 +91,12 @@ public class RaceCar {
 	}
 
 	public RaceCar(String name, double frontTrack, double rearTrack, double wheelbase, double cogHeight, double frontRollDist, double cornerWeightFL, double cornerWeightFR, double cornerWeightRL, double cornerWeightRR) {
-		this.name = new SimpleStringProperty(name);
-		this.frontTrack = new SimpleDoubleProperty(frontTrack);
-		this.rearTrack = new SimpleDoubleProperty(rearTrack);
-		this.wheelbase = new SimpleDoubleProperty(wheelbase);
-		this.cogHeight = new SimpleDoubleProperty(cogHeight);
-		this.frontRollDist = new SimpleDoubleProperty(frontRollDist);
+		this.name           = new SimpleStringProperty(name);
+		this.frontTrack     = new SimpleDoubleProperty(frontTrack);
+		this.rearTrack      = new SimpleDoubleProperty(rearTrack);
+		this.wheelbase      = new SimpleDoubleProperty(wheelbase);
+		this.cogHeight      = new SimpleDoubleProperty(cogHeight);
+		this.frontRollDist  = new SimpleDoubleProperty(frontRollDist);
 		this.cornerWeightFL = new SimpleDoubleProperty(cornerWeightFL);
 		this.cornerWeightFR = new SimpleDoubleProperty(cornerWeightFR);
 		this.cornerWeightRL = new SimpleDoubleProperty(cornerWeightRL);
@@ -370,4 +373,9 @@ public class RaceCar {
 				this.getCornerWeightFR(), this.getCornerWeightRL(), this.getCornerWeightRR(),
 				this.getFrontAxleTireModel().toString(), this.getRearAxleTireModel().toString());
 	}
+
+	public String getColor() {
+		return color;
+	}
+
 }

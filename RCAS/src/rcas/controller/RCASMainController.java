@@ -3,6 +3,7 @@ package rcas.controller;
 import com.jfoenix.controls.*;
 import com.jfoenix.validation.RequiredFieldValidator;
 import com.jfoenix.validation.base.ValidatorBase;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -12,6 +13,7 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -52,6 +54,8 @@ public class RCASMainController {
 
 	private ArrayList<JFXTextField> advTextList = new ArrayList<>();
 	private ArrayList<JFXTextField> valTextList = new ArrayList<>();
+
+	RCASMMMController mmmController;
 
 
 	@FXML
@@ -177,8 +181,6 @@ public class RCASMainController {
 
 	}
 
-
-
 	@FXML
 	private void displaySelectedModel() {
 
@@ -227,7 +229,6 @@ public class RCASMainController {
 		wb    .setText(String.valueOf(raceCar.getWheelbase ()));
 
 	}
-
 
 	@FXML
 	private void advancedAxleModelPopUp() {
@@ -374,7 +375,6 @@ public class RCASMainController {
 
 	}
 
-
 	private boolean valTextList(ArrayList<JFXTextField> textFields) {
 
 		for (JFXTextField tf : textFields) {
@@ -387,32 +387,46 @@ public class RCASMainController {
 
 	}
 
-
 	@FXML
 	private void MMMDiagram() throws Exception {
 
+		if (mmmController == null) initMMMDiagram();
 
-		RCASMMMController mmmController = new RCASMMMController((RaceCar) listView.getSelectionModel().getSelectedItem().getUserData());
+		mmmController.addRaceCar((RaceCar) listView.getSelectionModel().getSelectedItem().getUserData());
+
+
+	}
+
+	private void initMMMDiagram() throws Exception {
+
+		mmmController = new RCASMMMController();
 
 		FXMLLoader fxmlLoader = new FXMLLoader();
-		fxmlLoader.setLocation(RCASMain.class.getResource("view/RCASMMMView.fxml"));
+		fxmlLoader.setLocation(RCASMain.class.getResource("view/RCASMMMView_T.fxml"));
 		fxmlLoader.setController(mmmController);
+
+		JFXMasonryPane mmmPane = fxmlLoader.load();
+		ScrollPane root = new ScrollPane(mmmPane);
+		root.setFitToWidth(true);
+
 
 		Stage mmmStage = new Stage();
 
-		BorderPane mmmPane = (BorderPane) fxmlLoader.load();
 
-		mmmStage.setScene(new Scene(mmmPane));
+		mmmStage.setScene(new Scene(root, 1300, 750));
 		mmmStage.setTitle("MMM Diagram Mz / Fy (Milliken Moment Method)");
-		mmmStage.setResizable(false);
 		mmmStage.centerOnScreen();
+
+		mmmStage.setOnCloseRequest(e -> mmmController = null);
 
 		mmmStage.show();
 
 	}
 
+
 	@FXML
 	private void deleteRaceCar() {
+
 		if (listView.getSelectionModel().getSelectedItem().getText().equals("New RaceCar Model")) {
 
 			notifyErrAction("Invalid action", "Please select a valid RaceCar");
@@ -423,6 +437,7 @@ public class RCASMainController {
 			listView.getItems().remove(listView.getSelectionModel().getSelectedIndex());
 
 		}
+
 	}
 
 	@FXML
