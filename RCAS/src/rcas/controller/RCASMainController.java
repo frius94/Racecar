@@ -59,7 +59,7 @@ public class RCASMainController {
 	private ArrayList<JFXTextField> advTextList = new ArrayList<>();
 	private ArrayList<JFXTextField> valTextList = new ArrayList<>();
 
-	RCASMMMController mmmController;
+	private RCASMMMController mmmController;
 
 
 	@FXML

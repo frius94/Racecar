@@ -2,6 +2,7 @@ package rcas.controller;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
@@ -40,12 +41,13 @@ public class RCASMMMController {
 
 			MMMChart(raceCar);
 
-			String name = raceCar.getName();
+			String name  = raceCar.getName();
+			String color = raceCar.getColor();
 
-			addChartData(util.getMMMBalanceValue  (raceCar), name, balanceChart);
-			addChartData(util.getMMMGripValue     (raceCar), name, gripChart);
-			addChartData(util.getMMMControlValue  (raceCar, 0.0, 0.0, 10.0), name, controlChart);
-			addChartData(util.getMMMStabilityValue(raceCar, 0.0, 0.0,  1.0), name, stabilityChart);
+			addChartData(util.getMMMBalanceValue  (raceCar), name, color, balanceChart);
+			addChartData(util.getMMMGripValue     (raceCar), name, color, gripChart);
+			addChartData(util.getMMMControlValue  (raceCar, 0.0, 0.0, 10.0), name, color, controlChart);
+			addChartData(util.getMMMStabilityValue(raceCar, 0.0, 0.0,  1.0), name, color, stabilityChart);
 
 			raceCars.add(raceCar);
 
@@ -70,12 +72,25 @@ public class RCASMMMController {
 		}
 	}
 
-	private void addChartData(double value, String name, BarChart<String, Number> chart) {
+	private void addChartData(double value, String name, String color, BarChart<String, Number> chart) {
 
 		XYChart.Series<String, Number> series = new XYChart.Series<>();
-		series.setName(name);
+
 		series.getData().add(new XYChart.Data<>("", value));
+
 		chart.getData().add(series);
+
+		chart.lookup(".default-color" + raceCars.size() + ".chart-bar").setStyle("-fx-bar-fill: " + color + ";");
+		System.out.println(raceCars.size());
+
+
+	}
+
+	private void applyColor(BarChart<String, Number> chart, String color) {
+
+		for(Node n:chart.lookupAll(".default-color" + (raceCars.size() - 1) + ".chart-bar")) {
+			n.setStyle("-fx-bar-fill: " + color + ";");
+		}
 
 	}
 
