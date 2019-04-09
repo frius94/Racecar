@@ -2,7 +2,6 @@ package rcas.controller;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
@@ -41,19 +40,43 @@ public class RCASMMMController {
 
 			MMMChart(raceCar);
 
-			String name  = raceCar.getName();
 			String color = raceCar.getColor();
 
-			addChartData(util.getMMMBalanceValue  (raceCar), name, color, balanceChart);
-			addChartData(util.getMMMGripValue     (raceCar), name, color, gripChart);
-			addChartData(util.getMMMControlValue  (raceCar, 0.0, 0.0, 10.0), name, color, controlChart);
-			addChartData(util.getMMMStabilityValue(raceCar, 0.0, 0.0,  1.0), name, color, stabilityChart);
+			addChartData(util.getMMMBalanceValue  (raceCar), color, balanceChart);
+			addChartData(util.getMMMGripValue     (raceCar), color, gripChart);
+			addChartData(util.getMMMControlValue  (raceCar, 0.0, 0.0, 10.0), color, controlChart);
+			addChartData(util.getMMMStabilityValue(raceCar, 0.0, 0.0,  1.0), color, stabilityChart);
 
 			raceCars.add(raceCar);
+
+			changeChartSize();
 
 		}
 
 	}
+
+	private void changeChartSize() {
+
+		switch(raceCars.size()) {
+
+			case 2: setChartSize(120); break;
+			case 3: setChartSize(100); break;
+			case 4: setChartSize(80); break;
+			case 5: setChartSize(60); break;
+			case 6: setChartSize(40); break;
+
+		}
+
+	}
+
+
+	private void setChartSize(double len) {
+		balanceChart  .setCategoryGap(len);
+		gripChart     .setCategoryGap(len);
+		controlChart  .setCategoryGap(len);
+		stabilityChart.setCategoryGap(len);
+	}
+
 
 
 	private void MMMChart(RaceCar raceCar) {
@@ -72,7 +95,7 @@ public class RCASMMMController {
 		}
 	}
 
-	private void addChartData(double value, String name, String color, BarChart<String, Number> chart) {
+	private void addChartData(double value, String color, BarChart<String, Number> chart) {
 
 		XYChart.Series<String, Number> series = new XYChart.Series<>();
 
@@ -81,16 +104,7 @@ public class RCASMMMController {
 		chart.getData().add(series);
 
 		chart.lookup(".default-color" + raceCars.size() + ".chart-bar").setStyle("-fx-bar-fill: " + color + ";");
-		System.out.println(raceCars.size());
 
-
-	}
-
-	private void applyColor(BarChart<String, Number> chart, String color) {
-
-		for(Node n:chart.lookupAll(".default-color" + (raceCars.size() - 1) + ".chart-bar")) {
-			n.setStyle("-fx-bar-fill: " + color + ";");
-		}
 
 	}
 
