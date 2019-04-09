@@ -306,6 +306,8 @@ public class RCASMainController {
 
 		jfxDialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
 
+		jfxDialog.setOnDialogClosed(e -> listView.setDisable(false));
+
 
 		saveAxle = new JFXButton("Save Axle Tire Models");
 		saveAxle.setPrefWidth(155);
@@ -346,6 +348,7 @@ public class RCASMainController {
 		content.setBody(pane);
 
 		jfxDialog.show();
+		listView.setDisable(true);
 
 	}
 
@@ -418,7 +421,7 @@ public class RCASMainController {
 
 			clearAllFields();
 			listView.getItems().remove(listView.getSelectionModel().getSelectedIndex());
-			
+
 		}
 	}
 
