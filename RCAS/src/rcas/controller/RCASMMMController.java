@@ -61,9 +61,9 @@ public class RCASMMMController {
 
 			case 2: setChartSize(120); break;
 			case 3: setChartSize(100); break;
-			case 4: setChartSize(80); break;
-			case 5: setChartSize(60); break;
-			case 6: setChartSize(40); break;
+			case 4: setChartSize( 80); break;
+			case 5: setChartSize( 60); break;
+			case 6: setChartSize( 40); break;
 
 		}
 

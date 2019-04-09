@@ -1,9 +1,0 @@
-/* Styling the slider track */
-.jfx-slider > .track {
-     -fx-background-color: transparent;
-}
-
-/* Styling the filled track */
-.jfx-slider > .colored-track {
-     -fx-background-color: transparent;
-}
