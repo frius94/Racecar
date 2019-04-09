@@ -18,6 +18,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
@@ -50,6 +51,9 @@ public class RCASMainController {
 
 	@FXML
 	private JFXDialog jfxDialog;
+
+	@FXML
+	private JFXColorPicker colorPicker;
 
 
 	private ArrayList<JFXTextField> advTextList = new ArrayList<>();
@@ -161,13 +165,14 @@ public class RCASMainController {
 		fTrack .clear();
 		rTrack .clear();
 		name   .clear();
+		colorPicker.setValue(Color.valueOf("#f44b42"));
 
 	}
 
 	private void initDefaultRaceCars() {
 
-		addRaceCarToList(new RaceCar("Car STD", 420, 420, 370, 370));
-		addRaceCarToList(new RaceCar("Car MOD", 350, 350, 270, 270));
+		addRaceCarToList(new RaceCar("Car STD", 420, 420, 370, 370, "#f44b42"));
+		addRaceCarToList(new RaceCar("Car MOD", 350, 350, 270, 270, "#00ACC1"));
 
 	}
 
@@ -227,6 +232,8 @@ public class RCASMainController {
 		fTrack.setText(String.valueOf(raceCar.getFrontTrack()));
 		rTrack.setText(String.valueOf(raceCar.getRearTrack ()));
 		wb    .setText(String.valueOf(raceCar.getWheelbase ()));
+
+		colorPicker.setValue(Color.valueOf(raceCar.getColor()));
 
 	}
 
@@ -445,7 +452,7 @@ public class RCASMainController {
 
 	    if (valTextList(valTextList)) {
 
-	    	RaceCar raceCar = new RaceCar(name.getText(), Double.parseDouble(fTrack.getText()), Double.parseDouble(rTrack.getText()), Double.parseDouble(wb.getText()), Double.parseDouble(cog.getText()) / 100, Double.parseDouble(frd.getText()) / 100, Double.parseDouble(cwFL.getText()), Double.parseDouble(cwFR.getText()), Double.parseDouble(cwRL.getText()), Double.parseDouble(cwRR.getText()));
+	    	RaceCar raceCar = new RaceCar(name.getText(), Double.parseDouble(fTrack.getText()), Double.parseDouble(rTrack.getText()), Double.parseDouble(wb.getText()), Double.parseDouble(cog.getText()) / 100, Double.parseDouble(frd.getText()) / 100, Double.parseDouble(cwFL.getText()), Double.parseDouble(cwFR.getText()), Double.parseDouble(cwRL.getText()), Double.parseDouble(cwRR.getText()), colorPicker.getValue().toString());
 
 		    if(listView.getSelectionModel().getSelectedIndex() == listView.getItems().size() - 1) {
 

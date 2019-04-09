@@ -56,7 +56,7 @@ public class RaceCar {
 	private TireModel rearAxleTireModel;
 
 	//
-	private String color = "#f44b42";
+	private String color;
 
 	/**
 	 * Creates a new Race Car Object with the given corner weights in kg and the
@@ -78,19 +78,20 @@ public class RaceCar {
 	 * @param cornerWeightRR
 	 *            - Rear Right corner weight in kg.
 	 */
-	public RaceCar(String name, double cornerWeightFL, double cornerWeightFR, double cornerWeightRL, double cornerWeightRR) {
+	public RaceCar(String name, double cornerWeightFL, double cornerWeightFR, double cornerWeightRL, double cornerWeightRR, String color) {
 		this.name           = new SimpleStringProperty(name);
 		this.cornerWeightFL = new SimpleDoubleProperty(cornerWeightFL);
 		this.cornerWeightFR = new SimpleDoubleProperty(cornerWeightFR);
 		this.cornerWeightRL = new SimpleDoubleProperty(cornerWeightRL);
 		this.cornerWeightRR = new SimpleDoubleProperty(cornerWeightRR);
+		this.color          = color;
 
 		// initialize tire models with a default tire model.
 		this.frontAxleTireModel = new MagicFormulaTireModel();
 		this.rearAxleTireModel  = new MagicFormulaTireModel();
 	}
 
-	public RaceCar(String name, double frontTrack, double rearTrack, double wheelbase, double cogHeight, double frontRollDist, double cornerWeightFL, double cornerWeightFR, double cornerWeightRL, double cornerWeightRR) {
+	public RaceCar(String name, double frontTrack, double rearTrack, double wheelbase, double cogHeight, double frontRollDist, double cornerWeightFL, double cornerWeightFR, double cornerWeightRL, double cornerWeightRR, String color) {
 		this.name           = new SimpleStringProperty(name);
 		this.frontTrack     = new SimpleDoubleProperty(frontTrack);
 		this.rearTrack      = new SimpleDoubleProperty(rearTrack);
@@ -101,6 +102,7 @@ public class RaceCar {
 		this.cornerWeightFR = new SimpleDoubleProperty(cornerWeightFR);
 		this.cornerWeightRL = new SimpleDoubleProperty(cornerWeightRL);
 		this.cornerWeightRR = new SimpleDoubleProperty(cornerWeightRR);
+		this.color          = color;
 
 		// initialize tire models with a default tire model.
 		this.frontAxleTireModel = new MagicFormulaTireModel();
