@@ -75,20 +75,17 @@ public class RCASMainController {
 
 	private void initValidators() {
 
-		addVal(cog,   10.0,   200.0);
-		addVal(wb,     0.5,     6.0);
+		addVal(name                           );
 		addVal(cwFL,  50.0, 1_000.0);
 		addVal(cwFR,  50.0, 1_000.0);
-		addVal(cwRL,  50.0, 1_000.0);
 		addVal(cwRR,  50.0, 1_000.0);
-		addVal(frd,   20.0,    80.0);
+		addVal(cwRL,  50.0, 1_000.0);
+		addVal(wb,     0.5,     6.0);
 		addVal(fTrack, 1.2,     2.0);
 		addVal(rTrack, 1.2,     2.0);
+		addVal(cog,   10.0,   200.0);
+		addVal(frd,   20.0,    80.0);
 
-
-		//TODO: Unique Validator?
-		name.getValidators().add(new RequiredFieldValidator("Required"));
-		valTextList.add(name);
 
 	}
 
@@ -103,6 +100,12 @@ public class RCASMainController {
 
 		tf.setOnKeyReleased(e -> tf.validate());
 
+	}
+
+	private void addVal(JFXTextField tf) {
+		tf.getValidators().add(new RequiredFieldValidator("Required"));
+		tf.setOnKeyReleased(e -> tf.validate());
+		valTextList.add(tf);
 	}
 
 	private void createBindings() {
@@ -224,6 +227,7 @@ public class RCASMainController {
 		wb    .setText(String.valueOf(raceCar.getWheelbase ()));
 
 	}
+
 
 	@FXML
 	private void advancedAxleModelPopUp() {
@@ -407,14 +411,14 @@ public class RCASMainController {
 	@FXML
 	private void deleteRaceCar() {
 		if (listView.getSelectionModel().getSelectedItem().getText().equals("New RaceCar Model")) {
-			Notifications.create()
-					.position(Pos.TOP_RIGHT)
-					.title("Invalid action")
-					.text("Please choose a racecar")
-					.showError();
+
+			notifyErrAction("Invalid action", "Please select a valid RaceCar");
+
 		} else {
+
 			clearAllFields();
 			listView.getItems().remove(listView.getSelectionModel().getSelectedIndex());
+			
 		}
 	}
 
@@ -423,24 +427,60 @@ public class RCASMainController {
 
 	    if (valTextList(valTextList)) {
 
-	    	//TODO: If New RaceCar or already Selected One?
-	    	if(listView.getSelectionModel().getSelectedIndex() == listView.getItems().size() - 1) {}
-
 	    	RaceCar raceCar = new RaceCar(name.getText(), Double.parseDouble(fTrack.getText()), Double.parseDouble(rTrack.getText()), Double.parseDouble(wb.getText()), Double.parseDouble(cog.getText()) / 100, Double.parseDouble(frd.getText()) / 100, Double.parseDouble(cwFL.getText()), Double.parseDouble(cwFR.getText()), Double.parseDouble(cwRL.getText()), Double.parseDouble(cwRR.getText()));
 
-            Label label = new Label(raceCar.getName());
-            label.setUserData(raceCar);
-            listView.getItems().add(listView.getItems().size() - 1, label);
+		    if(listView.getSelectionModel().getSelectedIndex() == listView.getItems().size() - 1) {
+
+			    Label label = new Label(raceCar.getName());
+			    label.setUserData(raceCar);
+			    listView.getItems().add(listView.getItems().size() - 1, label);
+
+
+			    notifyAction("RaceCar created", raceCar.getName() + " successfully created.");
+
+
+		    } else {
+
+		    	Label rcas = listView.getSelectionModel().getSelectedItem();
+		    	rcas.setText(raceCar.getName());
+		    	rcas.setUserData(raceCar);
+
+			    notifyAction("RaceCar modified", raceCar.getName() + " successfully modified.");
+
+		    }
 
 
         } else {
-            Notifications.create()
-                    .position(Pos.TOP_RIGHT)
-                    .title("Invalid action")
-                    .text("Please fill every textfield with a value.")
-                    .showError();
-        }
+
+	    	notifyErrAction("Invalid action", "Please fill every textfield with a value.");
+
+	    }
 
 
 	}
+
+
+	private void notifyAction(String title, String text) {
+
+		Notifications.create()
+				.position(Pos.TOP_RIGHT)
+				.title(title)
+				.text(text)
+				.darkStyle()
+				.show();
+
+	}
+
+	private void notifyErrAction(String title, String text) {
+
+		Notifications.create()
+				.position(Pos.TOP_RIGHT)
+				.title("Invalid action")
+				.text("Please fill every textfield with a value.")
+				.darkStyle()
+				.showError();
+
+	}
+
+
 }
