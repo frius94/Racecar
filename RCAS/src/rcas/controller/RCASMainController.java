@@ -70,12 +70,15 @@ public class RCASMainController {
 		initListView();
 		initDefaultRaceCars();
 
+
 	}
 
 	private void initListView() {
 
+		listView.setExpanded(true);
+
 		Label label = new Label("New RaceCar Model");
-		label.setStyle("-fx-text-fill: forestgreen; -fx-font-weight: bold");
+		label.setStyle("-fx-text-fill: green;");
 
 		listView.getItems().add(label);
 
@@ -171,6 +174,12 @@ public class RCASMainController {
 
 	private void initDefaultRaceCars() {
 
+		addRaceCarToList(new RaceCar("Car STD", 420, 420, 370, 370, "#f44b42"));
+		addRaceCarToList(new RaceCar("Car MOD", 350, 350, 270, 270, "#00ACC1"));
+		addRaceCarToList(new RaceCar("Car STD", 420, 420, 370, 370, "#f44b42"));
+		addRaceCarToList(new RaceCar("Car MOD", 350, 350, 270, 270, "#00ACC1"));
+		addRaceCarToList(new RaceCar("Car STD", 420, 420, 370, 370, "#f44b42"));
+		addRaceCarToList(new RaceCar("Car MOD", 350, 350, 270, 270, "#00ACC1"));
 		addRaceCarToList(new RaceCar("Car STD", 420, 420, 370, 370, "#f44b42"));
 		addRaceCarToList(new RaceCar("Car MOD", 350, 350, 270, 270, "#00ACC1"));
 
@@ -442,6 +451,7 @@ public class RCASMainController {
 
 			clearAllFields();
 			listView.getItems().remove(listView.getSelectionModel().getSelectedIndex());
+			listView.getSelectionModel().selectLast();
 
 		}
 
