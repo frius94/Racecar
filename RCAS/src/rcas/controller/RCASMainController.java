@@ -201,7 +201,7 @@ public class RCASMainController {
 	}
 
 	@FXML
-	public void displaySelectedModel() {
+	private void displaySelectedModel() {
 
 		if (!listView.getSelectionModel().isEmpty()) {
 
@@ -220,13 +220,18 @@ public class RCASMainController {
 
 			} else {
 
-				clearAllFields();
-
-				tm.setDisable(true);
-				showMMM.setDisable(true);
+				newRaceCar();
 
 			}
 		}
+
+	}
+
+	private void newRaceCar() {
+
+		clearAllFields();
+		tm.setDisable(true);
+		showMMM.setDisable(true);
 
 	}
 
@@ -422,7 +427,7 @@ public class RCASMainController {
 		mmmController = new RCASMMMController();
 
 		FXMLLoader fxmlLoader = new FXMLLoader();
-		fxmlLoader.setLocation(RCASMain.class.getResource("view/RCASMMMView_T.fxml"));
+		fxmlLoader.setLocation(RCASMain.class.getResource("view/RCASMMMView.fxml"));
 		fxmlLoader.setController(mmmController);
 
 		JFXMasonryPane mmmPane = fxmlLoader.load();
@@ -500,6 +505,7 @@ public class RCASMainController {
 
 	public void moveToNewCar() {
 		listView.getSelectionModel().selectLast();
+		newRaceCar();
 	}
 
 

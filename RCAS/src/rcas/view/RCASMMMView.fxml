@@ -1,88 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXMasonryPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <center>
-      <HBox fillHeight="false" prefHeight="550.0" BorderPane.alignment="CENTER">
-         <children>
-             <LineChart id="mainChart" fx:id="mainChart" animated="false" createSymbols="false" legendVisible="false" prefHeight="600" prefWidth="600">
-                 <xAxis>
-                     <NumberAxis label="Lateral Acceleration Fy (G)" side="BOTTOM" fx:id="xAxis" />
-                 </xAxis>
-                 <yAxis>
-                     <NumberAxis fx:id="yAxis" label="Yaw-Moment (Nm)" side="LEFT" />
-                 </yAxis>
-             </LineChart>
-            <GridPane prefHeight="554.0" prefWidth="600.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <BarChart fx:id="balanceChart" barGap="0.0" categoryGap="70.0" prefWidth="10.0">
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis autoRanging="false" label="Nm" lowerBound="-4000.0" minorTickCount="1" side="LEFT" tickUnit="500.0" upperBound="4000.0" />
-                    </yAxis>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <GridPane.margin>
-                        <Insets left="50.0" right="50.0" />
-                     </GridPane.margin>
-                  </BarChart>
-                  <BarChart fx:id="gripChart" barGap="0.0" categoryGap="70.0" prefHeight="550.0" prefWidth="478.0" GridPane.columnIndex="1">
-                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
-                     </xAxis>
-                     <yAxis>
-                        <NumberAxis autoRanging="false" side="LEFT" tickUnit="10.0" upperBound="50.0" />
-                     </yAxis>
-                     <GridPane.margin>
-                        <Insets left="50.0" right="50.0" />
-                     </GridPane.margin>
-                  </BarChart>
-                  <BarChart fx:id="controlChart" barGap="0.0" categoryGap="70.0" prefHeight="550.0" prefWidth="223.0" GridPane.rowIndex="1">
-                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
-                     </xAxis>
-                     <yAxis>
-                        <NumberAxis autoRanging="false" lowerBound="-9000.0" minorTickCount="2" side="LEFT" tickUnit="1500.0" upperBound="9000.0" />
-                     </yAxis>
-                     <GridPane.margin>
-                        <Insets left="50.0" right="50.0" />
-                     </GridPane.margin>
-                  </BarChart>
-                  <BarChart fx:id="stabilityChart" barGap="0.0" categoryGap="70.0" prefHeight="550.0" prefWidth="223.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
-                     </xAxis>
-                     <yAxis>
-                        <NumberAxis autoRanging="false" lowerBound="-9000.0" minorTickCount="2" side="LEFT" tickUnit="1500.0" upperBound="9000.0" />
-                     </yAxis>
-                     <GridPane.margin>
-                        <Insets left="34.0" right="50.0" />
-                     </GridPane.margin>
-                  </BarChart>
-               </children>
-            </GridPane>
-         </children>
-      </HBox>
-   </center>
-</BorderPane>
+<JFXMasonryPane prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <LineChart id="mainChart" fx:id="mainChart" animated="false" createSymbols="false" legendVisible="false" prefHeight="600.0" prefWidth="600.0">
+         <xAxis>
+            <NumberAxis label="Lateral Acceleration Fy (G)" side="BOTTOM" fx:id="xAxis" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis fx:id="yAxis" label="Yaw-Moment (Nm)" side="LEFT" />
+         </yAxis>
+      </LineChart>
+      <BarChart fx:id="balanceChart" barGap="0.0" categoryGap="140.0" legendVisible="false" prefHeight="300.0" prefWidth="250.0" title="Balance in Nm">
+         <xAxis>
+            <CategoryAxis side="BOTTOM" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis autoRanging="false" lowerBound="-4000.0" minorTickCount="3" side="LEFT" tickUnit="1000.0" upperBound="4000.0" />
+         </yAxis>
+      </BarChart>
+      <BarChart fx:id="gripChart" barGap="0.0" categoryGap="140.0" legendVisible="false" prefHeight="300.0" prefWidth="250.0" title="Grip in m/s^2">
+         <xAxis>
+            <CategoryAxis side="BOTTOM" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis autoRanging="false" minorTickCount="2" side="LEFT" tickUnit="10.0" upperBound="50.0" />
+         </yAxis>
+         <padding>
+            <Insets left="22.0" />
+         </padding>
+      </BarChart>
+      <BarChart fx:id="controlChart" barGap="0.0" categoryGap="140.0" legendVisible="false" prefHeight="300.0" prefWidth="250.0" title="Control in Nm/degree">
+         <xAxis>
+            <CategoryAxis side="BOTTOM" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis autoRanging="false" lowerBound="-9000.0" minorTickCount="2" side="LEFT" tickUnit="1500.0" upperBound="9000.0" />
+         </yAxis>
+      </BarChart>
+      <BarChart fx:id="stabilityChart" barGap="0.0" categoryGap="140.0" legendVisible="false" prefHeight="300.0" prefWidth="250.0" title="Stability in Nm/degree">
+         <xAxis>
+            <CategoryAxis side="BOTTOM" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis autoRanging="false" lowerBound="-9000.0" minorTickCount="2" side="LEFT" tickUnit="1500.0" upperBound="9000.0" />
+         </yAxis>
+      </BarChart>
+   </children>
+</JFXMasonryPane>
