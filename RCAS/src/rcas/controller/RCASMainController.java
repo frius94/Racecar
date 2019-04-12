@@ -196,7 +196,7 @@ public class RCASMainController {
 	}
 
 	@FXML
-	private void displaySelectedModel() {
+	public void displaySelectedModel() {
 
 		if (!listView.getSelectionModel().isEmpty()) {
 
@@ -441,7 +441,7 @@ public class RCASMainController {
 
 
 	@FXML
-	private void deleteRaceCar() {
+	public void deleteRaceCar() {
 
 		if (listView.getSelectionModel().getSelectedItem().getText().equals("New RaceCar Model")) {
 
@@ -458,7 +458,7 @@ public class RCASMainController {
 	}
 
 	@FXML
-	private void saveRaceCar() {
+	public void saveRaceCar() {
 
 	    if (valTextList(valTextList)) {
 
@@ -492,6 +492,10 @@ public class RCASMainController {
 	    }
 
 
+	}
+
+	public void moveToNewCar() {
+		listView.getSelectionModel().selectLast();
 	}
 
 
