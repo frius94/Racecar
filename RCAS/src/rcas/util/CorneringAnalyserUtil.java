@@ -285,7 +285,7 @@ public class CorneringAnalyserUtil {
 			 * forces in N. It is assumed that the longitudinal acceleration
 			 * (ax) is 0 and that aerodynamic load (Fw,z,L) is 0, too.
 			 *
-			 * As a TODO this part can be extended as soon as the RaceCar class
+			 * As a TO DO this part can be extended as soon as the RaceCar class
 			 * implements a suspension and aero model.
 			 */
 			Double ax = 0.0;

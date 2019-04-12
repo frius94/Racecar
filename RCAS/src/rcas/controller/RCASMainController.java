@@ -308,7 +308,7 @@ public class RCASMainController {
 
 		cF .setText(String.valueOf(tmF.getSlipAngleCoefficientC()));
 		bF .setText(String.valueOf(tmF.getSlipAngleCoefficientB()));
-		eF .setText(String.valueOf(tmF.getSlipAngleCoefficientE()));    // TODO: Update Validator for Neg Numbers!
+		eF .setText(String.valueOf(tmF.getSlipAngleCoefficientE()));
 		kaF.setText(String.valueOf(tmF.getLoadCoefficientKA()));
 		kbF.setText(String.valueOf(tmF.getLoadCoefficientKB()));
 
