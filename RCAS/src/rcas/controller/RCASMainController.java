@@ -462,7 +462,7 @@ public class RCASMainController {
 
 	    if (valTextList(valTextList)) {
 
-	    	RaceCar raceCar = new RaceCar(name.getText(), Double.parseDouble(fTrack.getText()), Double.parseDouble(rTrack.getText()), Double.parseDouble(wb.getText()), Double.parseDouble(cog.getText()) / 100, Double.parseDouble(frd.getText()) / 100, Double.parseDouble(cwFL.getText()), Double.parseDouble(cwFR.getText()), Double.parseDouble(cwRL.getText()), Double.parseDouble(cwRR.getText()), colorPicker.getValue().toString());
+	    	RaceCar raceCar = new RaceCar(name.getText(), Double.parseDouble(fTrack.getText()), Double.parseDouble(rTrack.getText()), Double.parseDouble(wb.getText()), Double.parseDouble(cog.getText()) / 100, Double.parseDouble(frd.getText()) / 100, Double.parseDouble(cwFL.getText()), Double.parseDouble(cwFR.getText()), Double.parseDouble(cwRL.getText()), Double.parseDouble(cwRR.getText()), "#" + Integer.toHexString(colorPicker.getValue().hashCode()));
 
 		    if(listView.getSelectionModel().getSelectedIndex() == listView.getItems().size() - 1) {
 
@@ -516,6 +516,5 @@ public class RCASMainController {
 				.showError();
 
 	}
-
 
 }
