@@ -438,7 +438,7 @@ public class RCASMainController {
 		Stage mmmStage = new Stage();
 
 
-		mmmStage.setScene(new Scene(root, 1300, 750));
+		mmmStage.setScene(new Scene(root, 1300, 780));
 		mmmStage.setTitle("MMM Diagram Mz / Fy (Milliken Moment Method)");
 		mmmStage.centerOnScreen();
 
