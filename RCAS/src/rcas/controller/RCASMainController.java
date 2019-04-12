@@ -196,7 +196,7 @@ public class RCASMainController {
 	}
 
 	@FXML
-	public void displaySelectedModel() {
+	private void displaySelectedModel() {
 
 		if (!listView.getSelectionModel().isEmpty()) {
 
@@ -215,13 +215,18 @@ public class RCASMainController {
 
 			} else {
 
-				clearAllFields();
-
-				tm.setDisable(true);
-				showMMM.setDisable(true);
+				newRaceCar();
 
 			}
 		}
+
+	}
+
+	private void newRaceCar() {
+
+		clearAllFields();
+		tm.setDisable(true);
+		showMMM.setDisable(true);
 
 	}
 
@@ -495,6 +500,7 @@ public class RCASMainController {
 
 	public void moveToNewCar() {
 		listView.getSelectionModel().selectLast();
+		newRaceCar();
 	}
 
 
