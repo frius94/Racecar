@@ -37,7 +37,7 @@ public class CorneringAnalyserUtil {
 	}
 
 	/*
-	 * Other possible calculations to be offered in this class as a TODO for
+	 * Other possible calculations to be offered in this class as a To Do for
 	 * further development.
 	 *
 	 * Double getYawInertia(...): Annäherung Massenträgheitsmoment mit der

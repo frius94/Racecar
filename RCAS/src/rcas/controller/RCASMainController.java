@@ -215,7 +215,6 @@ public class RCASMainController {
 
 			} else {
 
-				// ADD NEW RACE CAR
 				clearAllFields();
 
 				tm.setDisable(true);
@@ -332,7 +331,7 @@ public class RCASMainController {
 		saveAxle.setButtonType(JFXButton.ButtonType.RAISED);
 		saveAxle.setStyle("-fx-background-color:  lightgreen");
 
-		// TODO: Save Tire Models to RaceCar
+
 		saveAxle.setOnAction(e -> {
 
 			if(valTextList(valTextList)) {
