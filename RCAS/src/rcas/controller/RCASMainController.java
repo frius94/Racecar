@@ -422,7 +422,7 @@ public class RCASMainController {
 		mmmController = new RCASMMMController();
 
 		FXMLLoader fxmlLoader = new FXMLLoader();
-		fxmlLoader.setLocation(RCASMain.class.getResource("view/RCASMMMView_T.fxml"));
+		fxmlLoader.setLocation(RCASMain.class.getResource("view/RCASMMMView.fxml"));
 		fxmlLoader.setController(mmmController);
 
 		JFXMasonryPane mmmPane = fxmlLoader.load();
