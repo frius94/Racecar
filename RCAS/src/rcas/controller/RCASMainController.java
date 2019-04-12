@@ -215,7 +215,6 @@ public class RCASMainController {
 
 			} else {
 
-				// ADD NEW RACE CAR
 				clearAllFields();
 
 				tm.setDisable(true);
@@ -309,7 +308,7 @@ public class RCASMainController {
 
 		cF .setText(String.valueOf(tmF.getSlipAngleCoefficientC()));
 		bF .setText(String.valueOf(tmF.getSlipAngleCoefficientB()));
-		eF .setText(String.valueOf(tmF.getSlipAngleCoefficientE()));    // TODO: Update Validator for Neg Numbers!
+		eF .setText(String.valueOf(tmF.getSlipAngleCoefficientE()));
 		kaF.setText(String.valueOf(tmF.getLoadCoefficientKA()));
 		kbF.setText(String.valueOf(tmF.getLoadCoefficientKB()));
 
@@ -332,7 +331,7 @@ public class RCASMainController {
 		saveAxle.setButtonType(JFXButton.ButtonType.RAISED);
 		saveAxle.setStyle("-fx-background-color:  lightgreen");
 
-		// TODO: Save Tire Models to RaceCar
+
 		saveAxle.setOnAction(e -> {
 
 			if(valTextList(valTextList)) {
