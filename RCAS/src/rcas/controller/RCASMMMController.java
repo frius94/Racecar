@@ -14,6 +14,8 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import rcas.model.RaceCar;
 import rcas.util.CorneringAnalyserUtil;
 import java.util.ArrayList;
@@ -29,6 +31,8 @@ public class RCASMMMController {
 	private BarChart<String, Number> balanceChart, gripChart, controlChart, stabilityChart;
 	@FXML
 	private JFXTextField ctrl_B, ctrl_D, ctrl_toD, stab_D, stab_B, stab_toB;
+	@FXML
+	private VBox legend;
 
 	private CorneringAnalyserUtil util;
 	private ArrayList<RaceCar> raceCars;
@@ -107,10 +111,24 @@ public class RCASMMMController {
 			addChartData(util.getMMMStabilityValue(raceCar, tfData[3], tfData[4], tfData[5]), color, stabilityChart);
 
 			raceCars.add(raceCar);
+			addRaceCarLegend(raceCar);
 
 			changeChartSize();
 
+
 		}
+
+	}
+
+	private void addRaceCarLegend(RaceCar raceCar) {
+
+		Label label = new Label(raceCar.getName());
+		label.setPrefWidth(350);
+		label.setPrefHeight(30);
+		label.setAlignment(Pos.CENTER);
+		label.setStyle("-fx-font-weight: bold; -fx-background-color: " + raceCar.getColor() + ";");
+
+		legend.getChildren().add(label);
 
 	}
 

@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <JFXMasonryPane prefHeight="780.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
@@ -135,5 +136,17 @@
             </GridPane>
          </children>
       </StackPane>
+      <VBox fx:id="legend" fillWidth="false" prefHeight="150.0" prefWidth="250.0" spacing="2.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="20.0" prefWidth="350.0" text="Legend" underline="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </VBox>
    </children>
 </JFXMasonryPane>
