@@ -24,9 +24,15 @@ import rcas.util.CorneringAnalyserUtil;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * MMM Diagram / BarChart Controller Class for GUI
+ *
+ * @author Christopher O'Connor, Umut Savas
+ * @version 1.0
+ * @since 2019-04-16
+ */
 
 public class RCASMMMController {
-
 
 	@FXML
 	private LineChart<Number, Number> mainChart;
@@ -37,11 +43,18 @@ public class RCASMMMController {
 	@FXML
 	private VBox legend;
 
+	// Utility Class for the analysis of the cornering capabilities of a RaceCar
 	private CorneringAnalyserUtil util;
+	// List containing all added RaceCars
 	private ArrayList<RaceCar> raceCars;
+	// List of Value Labels added to control BarChart
 	private ArrayList<Text>   controlChartValueLabels;
+	// List of Value Labels added to stability BarChart
 	private ArrayList<Text> stabilityChartValueLabels;
 
+	/**
+	 * Constructs a new RCASMMMController
+	 */
 	public RCASMMMController() {
 
 		this.util     = new CorneringAnalyserUtil();
@@ -52,13 +65,20 @@ public class RCASMMMController {
 
 	}
 
+	/**
+	 * Initialize on Startup
+	 * All TextField Validators {@link #initDoubleVal(JFXTextField)} are Added
+	 */
 	@FXML
 	private void initialize() {
 
 		initDoubleValTextFields();
 
 	}
-	
+
+	/**
+	 * All TextField Validators {@link #initDoubleVal(JFXTextField)} are Added
+	 */
 	private void initDoubleValTextFields() {
 
 		initDoubleVal(ctrl_B  ).setText( "0");
@@ -69,12 +89,18 @@ public class RCASMMMController {
 		initDoubleVal(stab_toB).setText( "1");
 
 	}
-	
+
+	/**
+	 * Double Validator to ensure only Double Values are Entered into TextField
+	 * @param tf TextField to apply Validator to
+	 * @return TextField which the Validator was applied to
+	 */
 	@SuppressWarnings("Duplicates")
 	private JFXTextField initDoubleVal(JFXTextField tf) {
 
 		ChangeListener<String> doubleValidator = new ChangeListener<String>() {
-
+			// If the NewValue of a TextField matches Regex pattern change the TextField Value
+			// (No Letters can be Typed into the TextField or other Symbols)
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				if (!newValue.matches("[-]?\\d{0,7}[\\.]?\\d{0,4}")) {
@@ -90,6 +116,10 @@ public class RCASMMMController {
 
 	}
 
+	/**
+	 * Get Values from all TextFields and save them in a Array[]
+	 * @return Array[] containing all TextFieldValues entered by User
+	 */
 	private double [] getTFData() {
 
 		double [] data = new double[6];
@@ -103,7 +133,11 @@ public class RCASMMMController {
 
 		return data;
 	}
-	
+
+	/**
+	 * Add RaceCar to MMMDiagram, BarCharts and Legend with its selected Color
+	 * @param raceCar RaceCar which will be added
+	 */
 	public void addRaceCar(RaceCar raceCar) {
 
 		if(!raceCars.contains(raceCar)) {
@@ -127,6 +161,10 @@ public class RCASMMMController {
 
 	}
 
+	/**
+	 * Add RaceCar to Legend (Name and Color of RaceCar)
+	 * @param raceCar RaceCar which will be Added to the Legend {@link #legend}
+	 */
 	private void addRaceCarLegend(RaceCar raceCar) {
 
 		Label label = new Label(raceCar.getName());
@@ -139,6 +177,10 @@ public class RCASMMMController {
 
 	}
 
+	/**
+	 * Recalculate & Update:
+	 * BarChart (Control & Stability) when the User changed Settings (Betta Delta etc.)
+	 */
 	@FXML
 	private void upDateChart(){
 
@@ -147,12 +189,15 @@ public class RCASMMMController {
 
 		for (RaceCar raceCar :raceCars) {
 
+			// Recalculate Values
 			final double controlValue   = (Math.round(util.getMMMControlValue  (raceCar, tfData[0], tfData[1], tfData[2]) * 100)) / 100;
 			final double stabilityValue = (Math.round(util.getMMMStabilityValue(raceCar, tfData[3], tfData[4], tfData[5]) * 100)) / 100;
 
+			// Set new Values
 			controlChart  .getData().get(i).getData().get(0).setYValue(  controlValue);
 			stabilityChart.getData().get(i).getData().get(0).setYValue(stabilityValue);
 
+			// Change BarChart Text Label Value
 			controlChartValueLabels  .get(i).setText(controlValue   + "");
 			stabilityChartValueLabels.get(i).setText(stabilityValue + "");
 
@@ -160,7 +205,10 @@ public class RCASMMMController {
 		}
 
 	}
-	
+
+	/**
+	 * Change the Size of the Bars in BarChart depending on how many RaceCars there are.
+	 */
 	private void changeChartSize() {
 
 		switch(raceCars.size()) {
@@ -180,6 +228,10 @@ public class RCASMMMController {
 
 	}
 
+	/**
+	 * Set the Gap between Categories of a Chart
+	 * @param len double value of length
+	 */
 	private void setChartSize(double len) {
 		balanceChart  .setCategoryGap(len);
 		gripChart     .setCategoryGap(len);
@@ -187,6 +239,10 @@ public class RCASMMMController {
 		stabilityChart.setCategoryGap(len);
 	}
 
+	/**
+	 * Add RaceCar MMMChartData to MMMDiagram and set the Color to the RaceCar selected Color
+	 * @param raceCar RaceCar which will be added
+	 */
 	private void MMMChart(RaceCar raceCar) {
 
 		ObservableList<XYChart.Series<Number, Number>> dataList = util.generateMMMChartData(raceCar);
@@ -199,13 +255,21 @@ public class RCASMMMController {
 
 	}
 
+	/**
+	 * Add ChartData of a RaceCar
+	 * @param value Value to Add
+	 * @param color Color of the RaceCar
+	 * @param chart Chart to add the Value to
+	 */
 	private void addChartData(double value, String color, BarChart<String, Number> chart) {
 
+		// Round Value to .00
 		final double VALUE  = (Math.round(value * 100)) / 100;
 	
 		XYChart.Series<String, Number> series = new XYChart.Series<>();
 		XYChart.Data  <String, Number> data   = new XYChart.Data<>("", VALUE);
 
+		// Set Color of the Bar
 		data.nodeProperty().addListener(new ChangeListener<Node>() {
 			@Override
 			public void changed(ObservableValue<? extends Node> observable, Node oldValue, final Node node) {
@@ -219,24 +283,33 @@ public class RCASMMMController {
 
 	}
 
+	/**
+	 * Display Value Label on top of the Bar
+	 * @param data Data of the Bar where the Label will be Added to
+	 * @param chart Chart of the Bar specified
+	 */
 	private void displayLabelForData(XYChart.Data<String, Number> data, BarChart<String, Number> chart) {
 
 		Node node     = data.getNode();
 		Text dataText = new Text(data.getYValue() + "");
 
+		// Add Label with Value
 		node.parentProperty().addListener(new ChangeListener<Parent>() {
 			@Override
 			public void changed(ObservableValue<? extends Parent> ov, Parent oldParent, Parent parent) {
+
 				Group parentGroup = (Group) parent;
+
 				if (parentGroup != null) {
 
 					ObservableList<Node> children = parentGroup.getChildren();
-					if (children != null)
-						children.add(dataText);
+					if (children != null) children.add(dataText);
+
 				}
 			}
 		});
 
+		// Set Label Location in BarChart
 		node.boundsInParentProperty().addListener(new ChangeListener<Bounds>() {
 			@Override
 			public void changed(ObservableValue<? extends Bounds> ov, Bounds oldBounds, Bounds bounds) {
@@ -249,6 +322,9 @@ public class RCASMMMController {
 			}
 		});
 
+		/** Add Label to Correct List
+		 *  To Update Label Value when {@link #upDateChart()} is Called
+		 */
 		if(chart == controlChart)     controlChartValueLabels.add(dataText);
 		if(chart == stabilityChart) stabilityChartValueLabels.add(dataText);
 

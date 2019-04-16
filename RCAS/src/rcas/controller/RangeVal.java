@@ -18,7 +18,7 @@ import java.text.NumberFormat;
  *
  * @author Christopher O'Connor
  * @version 1.0
- * @since 2019-03-26
+ * @since 2019-04-16
  */
 
 @DefaultProperty(value = "icon")
@@ -36,34 +36,36 @@ public class RangeVal extends ValidatorBase {
 	@Override
 	protected void eval() {
 
-		hasErrors.set(false);
+		super.hasErrors.set(false);
 
-		TextInputControl textField = (TextInputControl) srcControl.get();
+		TextInputControl textField = (TextInputControl) super.srcControl.get();
 
 		if ((textField.getText() != null || !textField.getText().isEmpty()) && isDouble(textField.getText())) {
 
 			if (Double.valueOf(textField.getText()) < min || Double.valueOf(textField.getText()) > max) {
 
+				// create Error message with formatted double.
 				NumberFormat nf = new DecimalFormat("####.#");
-
 				super.setMessage(nf.format(min) + " - " + nf.format(max));
-				hasErrors.set(true);
+				super.hasErrors.set(true);
 
 			}
 		}
 
 	}
 
+	/**
+	 * Validate if String is a Double or not
+	 * @param s String which is tested
+	 * @return If String Value is a Double true, else false
+	 */
 	private boolean isDouble(String s) {
 
 		try {
-
 			Double.valueOf(s);
 			return true;
-
 		} catch (NumberFormatException e) { return false; }
 
 	}
-
 
 }
