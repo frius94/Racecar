@@ -538,7 +538,7 @@ public class RCASMainController {
 
 		mmmStage.setScene(new Scene(root, 1300, 780));
 		mmmStage.setTitle("MMM Diagram Mz / Fy (Milliken Moment Method)");
-		mmmStage.getIcons().add(new Image(RCASMain.class.getResourceAsStream("view/icon2.png")));
+		mmmStage.getIcons().add(new Image(RCASMain.class.getResourceAsStream("view/imgs/icon2.png")));
 		mmmStage.centerOnScreen();
 
 		// If the Window will be closed also Delete reference to the Constructor to
@@ -608,6 +608,11 @@ public class RCASMainController {
 		newRaceCar();
 	}
 
+	/**
+	 * Create Notification on TopLeft Screen Corner
+	 * @param title Title of the Notification
+	 * @param text Text of the Notification
+	 */
 	private void notifyAction(String title, String text) {
 
 		Notifications.create()
@@ -619,6 +624,11 @@ public class RCASMainController {
 
 	}
 
+	/**
+	 * Create Error Notification on TopLeft Screen Corner
+	 * @param title Title of the Error - Notification
+	 * @param text Text of the Error - Notification
+	 */
 	private void notifyErrAction(String title, String text) {
 
 		Notifications.create()

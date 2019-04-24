@@ -36,7 +36,7 @@ public class RCASMain extends Application {
 		primaryStage.setScene(new Scene(mainPane));
 		primaryStage.setTitle("M120 Race Car Analysis Studio");
 		primaryStage.setResizable(false);
-		primaryStage.getIcons().add(new Image(RCASMain.class.getResourceAsStream("view/icon.png")));
+		primaryStage.getIcons().add(new Image(RCASMain.class.getResourceAsStream("view/imgs/icon.png")));
 
 		primaryStage.centerOnScreen();
 

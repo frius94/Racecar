@@ -61,7 +61,18 @@
             <NumberAxis autoRanging="false" lowerBound="-9000.0" minorTickCount="2" side="LEFT" tickUnit="1500.0" upperBound="9000.0" />
          </yAxis>
       </BarChart>
+      <VBox fx:id="legend" fillWidth="false" prefHeight="150.0" prefWidth="250.0" spacing="2.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="20.0" prefWidth="350.0" text="Legend" underline="true">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" />
          </padding>
+      </VBox>
       <StackPane prefHeight="150.0" prefWidth="250.0">
          <children>
             <GridPane hgap="10.0" vgap="5.0">
@@ -90,10 +101,10 @@
                      </font>
                   </Label>
                   <JFXTextField fx:id="ctrl_B" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <JFXTextField fx:id="stab_D" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                   <JFXTextField fx:id="ctrl_D" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <JFXTextField fx:id="stab_B" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <JFXTextField fx:id="ctrl_toD" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <JFXTextField fx:id="stab_D" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <JFXTextField fx:id="stab_B" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <JFXTextField fx:id="stab_toB" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                   <Label text="β°:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                      <font>
@@ -137,17 +148,5 @@
             </GridPane>
          </children>
       </StackPane>
-      <VBox fx:id="legend" fillWidth="false" prefHeight="150.0" prefWidth="250.0" spacing="2.0">
-         <children>
-            <Label alignment="CENTER" prefHeight="20.0" prefWidth="350.0" text="Legend" underline="true">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-         </children>
-         <padding>
-            <Insets left="10.0" right="10.0" />
-         </padding>
-      </VBox>
    </children>
 </JFXMasonryPane>

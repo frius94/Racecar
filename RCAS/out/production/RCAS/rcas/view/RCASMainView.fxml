@@ -54,12 +54,12 @@
                <children>
                   <ImageView fitHeight="208.0" fitWidth="304.0" layoutX="466.0" layoutY="201.0" opacity="0.7" pickOnBounds="true" preserveRatio="true" style="-fx-view-order: 10;">
                      <image>
-                        <Image url="@racecarleft.png" />
+                        <Image url="@imgs/racecarleft.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="300.0" fitWidth="300.0" layoutX="135.0" layoutY="131.0" opacity="0.9" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
                      <image>
-                        <Image url="@racecar.png" />
+                        <Image url="@imgs/racecar.png" />
                      </image>
                   </ImageView>
                   <Line endX="-100.0" endY="194.0" layoutX="190.0" layoutY="179.0" startX="-100.0" startY="23.0" />

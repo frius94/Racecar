@@ -21,6 +21,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import rcas.model.RaceCar;
 import rcas.util.CorneringAnalyserUtil;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -253,8 +255,8 @@ public class RCASMMMController {
 	 */
 	private void addChartData(double value, String color, BarChart<String, Number> chart) {
 
-		// Round Value to .00
-		final double VALUE  = (Math.round(value * 100)) / 100;
+		// Round Value to .0
+		final double VALUE  = (Math.round(value * 10.0)) / 10.0;
 	
 		XYChart.Series<String, Number> series = new XYChart.Series<>();
 		XYChart.Data  <String, Number> data   = new XYChart.Data<>("", VALUE);
