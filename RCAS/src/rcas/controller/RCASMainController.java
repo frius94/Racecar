@@ -20,6 +20,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -537,6 +538,7 @@ public class RCASMainController {
 
 		mmmStage.setScene(new Scene(root, 1300, 780));
 		mmmStage.setTitle("MMM Diagram Mz / Fy (Milliken Moment Method)");
+		mmmStage.getIcons().add(new Image(RCASMain.class.getResourceAsStream("view/icon2.png")));
 		mmmStage.centerOnScreen();
 
 		// If the Window will be closed also Delete reference to the Constructor to

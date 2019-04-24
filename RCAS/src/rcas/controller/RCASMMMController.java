@@ -47,10 +47,7 @@ public class RCASMMMController {
 	private CorneringAnalyserUtil util;
 	// List containing all added RaceCars
 	private ArrayList<RaceCar> raceCars;
-	// List of Value Labels added to control BarChart
-	private ArrayList<Text>   controlChartValueLabels;
-	// List of Value Labels added to stability BarChart
-	private ArrayList<Text> stabilityChartValueLabels;
+
 
 	/**
 	 * Constructs a new RCASMMMController
@@ -59,9 +56,6 @@ public class RCASMMMController {
 
 		this.util     = new CorneringAnalyserUtil();
 		this.raceCars = new ArrayList<>();
-
-		this.controlChartValueLabels   = new ArrayList<>();
-		this.stabilityChartValueLabels = new ArrayList<>();
 
 	}
 
@@ -197,10 +191,6 @@ public class RCASMMMController {
 			controlChart  .getData().get(i).getData().get(0).setYValue(  controlValue);
 			stabilityChart.getData().get(i).getData().get(0).setYValue(stabilityValue);
 
-			// Change BarChart Text Label Value
-			controlChartValueLabels  .get(i).setText(controlValue   + "");
-			stabilityChartValueLabels.get(i).setText(stabilityValue + "");
-
 			i++;
 		}
 
@@ -292,6 +282,7 @@ public class RCASMMMController {
 
 		Node node     = data.getNode();
 		Text dataText = new Text(data.getYValue() + "");
+		dataText.setStyle("-fx-font-size: 14");
 
 		// Add Label with Value
 		node.parentProperty().addListener(new ChangeListener<Parent>() {
@@ -316,17 +307,29 @@ public class RCASMMMController {
 
 				dataText.setLayoutX(Math.round(bounds.getMinX() + bounds.getWidth() / 2 - dataText.prefWidth(-1) / 2));
 
-				if(Double.valueOf(dataText.getText()) > 0) dataText.setLayoutY(Math.round((bounds.getMinY()) - dataText.prefHeight(-1) * 0.1) + 20);
-				else dataText.setLayoutY(Math.round((bounds.getMaxY()) + dataText.prefHeight(-1)) - 25);
+				if(Double.valueOf(dataText.getText()) > 0) {
+					dataText.setLayoutY(Math.round((bounds.getMinY()) - dataText.prefHeight(-1) * 0.1) + 15);
+				} else {
+					dataText.setLayoutY(Math.round((bounds.getMaxY()) + dataText.prefHeight(-1)) - 25);
+				}
+
+				/**
+				 *  Update Text Value
+				 */
+				dataText.setText(data.getYValue() + "");
+
+				/**
+				 * Set Font Size depending on how many RaceCars are shown
+				 */
+				if (raceCars.size() > 2) dataText.setStyle("-fx-font-size: 11");
+
+				if (raceCars.size() > 5) dataText.setRotate(-40);
+
+				if (raceCars.size() > 7) dataText.setStyle("-fx-font-size: 9");
 
 			}
 		});
 
-		/** Add Label to Correct List
-		 *  To Update Label Value when {@link #upDateChart()} is Called
-		 */
-		if(chart == controlChart)     controlChartValueLabels.add(dataText);
-		if(chart == stabilityChart) stabilityChartValueLabels.add(dataText);
 
 	}
 

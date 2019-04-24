@@ -3,6 +3,7 @@ package rcas;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -35,6 +36,7 @@ public class RCASMain extends Application {
 		primaryStage.setScene(new Scene(mainPane));
 		primaryStage.setTitle("M120 Race Car Analysis Studio");
 		primaryStage.setResizable(false);
+		primaryStage.getIcons().add(new Image(RCASMain.class.getResourceAsStream("view/icon.png")));
 
 		primaryStage.centerOnScreen();
 
