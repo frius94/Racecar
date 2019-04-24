@@ -61,6 +61,7 @@
             <NumberAxis autoRanging="false" lowerBound="-9000.0" minorTickCount="2" side="LEFT" tickUnit="1500.0" upperBound="9000.0" />
          </yAxis>
       </BarChart>
+         </padding>
       <StackPane prefHeight="150.0" prefWidth="250.0">
          <children>
             <GridPane hgap="10.0" vgap="5.0">
