@@ -1,6 +1,7 @@
 package rcas.controller;
 
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -107,6 +108,8 @@ public class RCASMMMController {
 		};
 
 		tf.textProperty().addListener(doubleValidator);
+		tf.getValidators().add(new RequiredFieldValidator());
+		tf.setOnKeyReleased(e -> tf.validate());
 
 		return tf;
 
@@ -120,14 +123,31 @@ public class RCASMMMController {
 
 		double [] data = new double[6];
 
-		data [0] = Double.valueOf(ctrl_B  .getText());
-		data [1] = Double.valueOf(ctrl_D  .getText());
-		data [2] = Double.valueOf(ctrl_toD.getText());
-		data [3] = Double.valueOf(stab_D  .getText());
-		data [4] = Double.valueOf(stab_B  .getText());
-		data [5] = Double.valueOf(stab_toB.getText());
+		data [0] = getTFData(ctrl_B  );
+		data [1] = getTFData(ctrl_D  );
+		data [2] = getTFData(ctrl_toD);
+		data [3] = getTFData(stab_D  );
+		data [4] = getTFData(stab_B  );
+		data [5] = getTFData(stab_toB);
 
 		return data;
+	}
+
+	/**
+	 * Validate and Get Data from Textfield
+	 * if no value has been given set it to default 0.
+	 * @param tf Textfield to get value from
+	 * @return Textfield value as double or if validation fails: default 0.
+	 */
+	private double getTFData(JFXTextField tf) {
+
+		String data = tf.getText();
+
+		if(data != null && !data.isEmpty()) return Double.valueOf(data);
+
+		tf.setText("0");
+		return 0;
+
 	}
 
 	/**
@@ -186,8 +206,8 @@ public class RCASMMMController {
 		for (RaceCar raceCar :raceCars) {
 
 			// Recalculate Values
-			final double controlValue   = (Math.round(util.getMMMControlValue  (raceCar, tfData[0], tfData[1], tfData[2]) * 100)) / 100;
-			final double stabilityValue = (Math.round(util.getMMMStabilityValue(raceCar, tfData[3], tfData[4], tfData[5]) * 100)) / 100;
+			final double controlValue   = (Math.round(util.getMMMControlValue  (raceCar, tfData[0], tfData[1], tfData[2]) * 10.0)) / 10.0;
+			final double stabilityValue = (Math.round(util.getMMMStabilityValue(raceCar, tfData[3], tfData[4], tfData[5]) * 10.0)) / 10.0;
 
 			// Set new Values
 			controlChart  .getData().get(i).getData().get(0).setYValue(  controlValue);
