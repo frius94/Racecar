@@ -549,6 +549,11 @@ public class RCASMainController {
 
 	}
 
+	/**
+	 * Get the selected RaceCar model in the listView.
+	 * If it is selected, remove it from listView, clear input fields and select "New RaceCar Model" item in listView
+	 * Otherwise show notification for user to inform him to select a valid RaceCar
+	 */
 	@FXML
 	public void deleteRaceCar() {
 
@@ -566,6 +571,11 @@ public class RCASMainController {
 
 	}
 
+	/**
+	 * If all inputFields contain valid data:
+	 * 	If "New RaceCar Model" is selected, then create a new RaceCar, add it to listView and show notification
+	 * 	If an existing RaceCar is selected, then update the data and show notification
+	 */
 	@FXML
 	public void saveRaceCar() {
 
@@ -603,6 +613,9 @@ public class RCASMainController {
 
 	}
 
+	/**
+	 * Select the "new RaceCar Model" item from listView
+	 */
 	public void moveToNewCar() {
 		listView.getSelectionModel().selectLast();
 		newRaceCar();
